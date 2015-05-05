@@ -27,35 +27,36 @@ HTML_DIR = $(DOCS_DIR)/html
 
 COPY = cp -f
 SED = sed
-#AR = ar
-#RANLIB = ranlib
-#CXX_DIR = /home/ed/bin
 CXX_DIR = /usr
 CXX_BIN_DIR = $(CXX_DIR)/bin
-#CXX_OPTS = -fdiagnostics-color=always
-CXX = $(CXX_BIN_DIR)/g++ -std=c++1y $(CXX_OPTS)
-ifeq ($(ABI),64)
-  CXX_LIB_DIR = /usr/x86_64-w64-mingw32/sys-root/mingw/bin
-  CXX = $(CXX_BIN_DIR)/x86_64-w64-mingw32-g++ -std=c++1y $(CXX_OPTS)
-  AR = $(CXX_BIN_DIR)/x86_64-w64-mingw32-ar
-  RANLIB = $(CXX_BIN_DIR)/x86_64-w64-mingw32-ranlib
+CXX_OPTS = -fdiagnostics-color=always
+CXX = $(CXX_BIN_DIR)/g++ -std=c++14 $(CXX_OPTS)
+ifneq ("$(wildcard $(CXX_BIN_DIR)/ar)","")
+  AR = "$(CXX_BIN_DIR)/ar"
 else
-  CXX_LIB_DIR = /usr/i686-w64-mingw32/sys-root/mingw/bin
-  CXX = $(CXX_BIN_DIR)/i686-w64-mingw32-g++ -std=c++1y $(CXX_OPTS)
-  AR = $(CXX_BIN_DIR)/i686-w64-mingw32-ar
-  RANLIB = $(CXX_BIN_DIR)/i686-w64-mingw32-ranlib
+  AR = ar
+endif
+ifneq ("$(wildcard $(CXX_BIN_DIR)/ranlib)","")
+  RANLIB = "$(CXX_BIN_DIR)/ranlib"
+else
+  RANLIB = ranlib
+endif
+ifeq ($(ABI),64)
+  CXX_LIB_DIR = $(CXX_DIR)/lib64
+else
+  CXX_LIB_DIR = $(CXX_DIR)/lib32
 endif
 OPT = -O3
 #OPT = -g
 CXXFLAGS = -Wall -Wextra -Wno-deprecated-declarations $(OPT) -m$(ABI) -c
-OFLAGS = -Wall -Wextra $(OPT) -m$(ABI) -static-libgcc -static-libstdc++
-LIB_DL = 
+OFLAGS = -Wall -Wextra $(OPT) -m$(ABI) -fPIC -Wl,-rpath,$(CXX_LIB_DIR)
+LIB_DL = -ldl
 #  These flags control library symbol visibility.
 VIS_DEFAULT = -fvisibility=default
 VIS_HIDDEN = -fvisibility=hidden
-DLL_EXT = .dll
-EXE_EXT = .exe
-LIB_EXT = .lib
+DLL_EXT = .so
+EXE_EXT = 
+LIB_EXT = .a
 OBJ_EXT = .o
 DLL_PRE = 
 
@@ -75,41 +76,42 @@ BINS = \
   $(BIN_DIR)/RunITMDLL$(EXE_EXT)
 
 all: $(OBJ_DIR) \
-     orig new
+     orig \
+     new
 
 
 # new...
 
-new: $(BIN_DIR)/RunITM$(EXE_EXT) $(LIB_DIR)/libITM$(DLL_EXT)
+new: $(OBJ_DIR) $(BIN_DIR)/RunITM$(EXE_EXT) $(LIB_DIR)/libITM$(DLL_EXT)
 
 $(OBJ_DIR)/ITM$(OBJ_EXT): ITM.h $(SRC_DIR)/ITM.cpp
-	g++ -c -fPIC -o $(OBJ_DIR)/ITM$(OBJ_EXT) ITM.cpp
+	$(CXX) -c -fPIC -o $(OBJ_DIR)/ITM$(OBJ_EXT) ITM.cpp
 
 $(LIB_DIR)/libITM$(DLL_EXT): $(OBJ_DIR)/ITM$(OBJ_EXT)
-	g++ -shared -fPIC -o $(LIB_DIR)/libITM$(DLL_EXT) $(OBJ_DIR)/ITM$(OBJ_EXT)
+	$(CXX) -shared -fPIC -o $(LIB_DIR)/libITM$(DLL_EXT) $(OBJ_DIR)/ITM$(OBJ_EXT)
 
 $(OBJ_DIR)/RunITM$(OBJ_EXT): $(SRC_DIR)/RunITM.cpp
-	g++ -c -o $(OBJ_DIR)/RunITM$(OBJ_EXT) RunITM.cpp
+	$(CXX) -c -o $(OBJ_DIR)/RunITM$(OBJ_EXT) RunITM.cpp
 
 $(BIN_DIR)/RunITM$(EXE_EXT): $(OBJ_DIR)/RunITM$(OBJ_EXT) $(LIB_DIR)/libITM$(DLL_EXT)
-	g++ -o $(BIN_DIR)/RunITM$(EXE_EXT) $(OBJ_DIR)/RunITM$(OBJ_EXT) -L$(LIB_DIR) -lITM
+	$(CXX) -o $(BIN_DIR)/RunITM$(EXE_EXT) $(OBJ_DIR)/RunITM$(OBJ_EXT) -L$(LIB_DIR) -lITM
 
 
 # original...
 
-orig: $(BIN_DIR)/RunITMDLL$(EXE_EXT) $(LIB_DIR)/libITMDLL$(DLL_EXT)
+orig: $(OBJ_DIR) $(BIN_DIR)/RunITMDLL$(EXE_EXT) $(LIB_DIR)/libITMDLL$(DLL_EXT)
 
 $(OBJ_DIR)/ITMDLL$(OBJ_EXT): $(SRC_DIR)/ITMDLL.cpp
-	g++ -c -fPIC -o $(OBJ_DIR)/ITMDLL$(OBJ_EXT) $(SRC_DIR)/ITMDLL.cpp
+	$(CXX) -c -fPIC -o $(OBJ_DIR)/ITMDLL$(OBJ_EXT) $(SRC_DIR)/ITMDLL.cpp
 
 $(LIB_DIR)/libITMDLL$(DLL_EXT): $(OBJ_DIR)/ITMDLL$(OBJ_EXT)
-	g++ -shared -fPIC -o $(LIB_DIR)/libITMDLL$(DLL_EXT) $(OBJ_DIR)/ITMDLL$(OBJ_EXT)
+	$(CXX) -shared -fPIC -o $(LIB_DIR)/libITMDLL$(DLL_EXT) $(OBJ_DIR)/ITMDLL$(OBJ_EXT)
 
 $(OBJ_DIR)/RunITMDLL$(OBJ_EXT): $(SRC_DIR)/RunITMDLL.cpp
-	g++ -c -o $(OBJ_DIR)/RunITMDLL$(OBJ_EXT) $(SRC_DIR)/RunITMDLL.cpp
+	$(CXX) -c -o $(OBJ_DIR)/RunITMDLL$(OBJ_EXT) $(SRC_DIR)/RunITMDLL.cpp
 
 $(BIN_DIR)/RunITMDLL$(EXE_EXT): $(OBJ_DIR)/RunITMDLL$(OBJ_EXT) $(LIB_DIR)/libITMDLL$(DLL_EXT)
-	g++ -o $(BIN_DIR)/RunITMDLL$(EXE_EXT) $(OBJ_DIR)/RunITMDLL$(OBJ_EXT) -L$(LIB_DIR) -lITMDLL
+	$(CXX) -o $(BIN_DIR)/RunITMDLL$(EXE_EXT) $(OBJ_DIR)/RunITMDLL$(OBJ_EXT) -L$(LIB_DIR) -lITMDLL
 
 
 clean:
@@ -134,5 +136,50 @@ $(OUT_DIR):
 $(OBJ_DIR): $(OUT_DIR)
 	if test ! -d $(OBJ_DIR); then \
 	  mkdir $(OBJ_DIR); \
+	fi
+
+$(INST_INC_DIR):
+	if test ! -d $(INST_INC_DIR); then \
+	  mkdir $(INST_INC_DIR); \
+	fi
+
+$(INST_LIB_DIR):
+	if test ! -d $(INST_LIB_DIR); then \
+	  mkdir $(INST_LIB_DIR); \
+	fi
+
+$(INST_BIN_DIR):
+	if test ! -d $(INST_BIN_DIR); then \
+	  mkdir $(INST_BIN_DIR); \
+	fi
+
+$(CD_DIR):
+	if test ! -d $(CD_DIR); then \
+	  mkdir $(CD_DIR); \
+	fi
+
+$(PROD_DIR): $(CD_DIR)
+	if test ! -d $(PROD_DIR); then \
+	  mkdir $(PROD_DIR); \
+	fi
+
+$(OS_DIR): $(PROD_DIR)
+	if test ! -d $(OS_DIR); then \
+	  mkdir $(OS_DIR); \
+	fi
+
+$(ABI_DIR): $(OS_DIR)
+	if test ! -d $(ABI_DIR); then \
+	  mkdir $(ABI_DIR); \
+	fi
+
+$(DOCS_DIR): $(PROD_DIR)
+	if test ! -d $(DOCS_DIR); then \
+	  mkdir $(DOCS_DIR); \
+	fi
+
+$(HTML_DIR): $(DOCS_DIR)
+	if test ! -d $(HTML_DIR); then \
+	  mkdir $(HTML_DIR); \
 	fi
 

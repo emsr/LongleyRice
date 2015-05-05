@@ -1,6 +1,7 @@
 
 
 #include <iostream>
+#include <fstream>
 
 #include "ITM.h"
 
@@ -19,7 +20,7 @@ main()
   int    errnum;
 
   // Read profile data.
-  std::string  filename;
+  std::string filename;
   std::cout << "\n  Enter profile file name: ";
 #if defined(__cpp_lib_quoted_string_io)
   std::cin >> std::quoted(filename);
@@ -34,7 +35,7 @@ main()
 #else
     std::cerr << "\n  Error: Unable to open profile data file " << filename << "for reading.\n";
 #endif
-    return;
+    return 1;
   }
 
 
@@ -88,5 +89,6 @@ main()
                  frequency, climate, polarization, conf, rel,
                  dbloss, strmode, errnum);
 
+  return 0;
 }
 

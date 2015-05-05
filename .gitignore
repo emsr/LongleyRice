@@ -11,4 +11,16 @@
 
 itm_cpp.tar.bz2
 
+itm32/obj
+itm32/libITM.so
+itm32/RunITM
 
+itm64/obj
+itm64/libITM.so
+itm64/RunITM
+
+
+include/
+lib/
+lib64/
+bin/

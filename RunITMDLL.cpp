@@ -17,6 +17,9 @@
 //                     Results are probably invalid.
 //         Other-  Warning: Some parameters are out of range.
 //                          Results are probably invalid.
+
+#define DllExport  __declspec( dllexport )
+
 void
 DllExport _stdcall
 point_to_point(double elev[], double tht_m, double rht_m,
