@@ -115,7 +115,8 @@ adiff( double d, prop_type &prop, propa_type &propa)
   static double wd1, xd1, afo, qk, aht, xht;
   double a, q, pk, ds, th, wa, ar, wd, adiffv;
   if(d == 0)
-    { q=prop.hg[0]*prop.hg[1];
+    {
+	  q=prop.hg[0]*prop.hg[1];
 	  qk=prop.he[0]*prop.he[1]-q;
       if(prop.mdp < 0.0)
 	    q+=10.0;
@@ -129,7 +130,8 @@ adiff( double d, prop_type &prop, propa_type &propa)
 	  aht=20.0;
 	  xht=0.0;
 	  for(int j=0;j < 2;++j)
-	    { a=0.5*pow(prop.dl[j],2.0)/prop.he[j];
+	    {
+		  a=0.5*pow(prop.dl[j],2.0)/prop.he[j];
 		  wa=pow(a*prop.wn,THIRD);
 		  pk=qk/wa;
 		  q=(1.607-pk)*151.0*wa*prop.dl[j]/a;
@@ -139,7 +141,8 @@ adiff( double d, prop_type &prop, propa_type &propa)
 	  adiffv=0.0;
 	}
   else
-    { th=propa.tha+d*prop.gme;
+    {
+	  th=propa.tha+d*prop.gme;
 	  ds=d-propa.dla;
 	  q=0.0795775*prop.wn*ds*pow(th,2.0);
 	  adiffv=aknfe(q*prop.dl[0]/(ds+prop.dl[0]))+aknfe(q*prop.dl[1]/(ds+prop.dl[1]));
@@ -163,10 +166,12 @@ ascat( double d, prop_type &prop, propa_type &propa)
   double h0, r1, r2, z0, ss, et, ett, th, q;
   double ascatv;
   if(d == 0.0)
-    { ad=prop.dl[0]-prop.dl[1];
+    {
+	  ad=prop.dl[0]-prop.dl[1];
 	  rr=prop.he[1]/prop.he[0];
 	  if(ad < 0.0)
-	    { ad=-ad;
+	    {
+		  ad=-ad;
 		  rr=1.0/rr;
         }
 	  etq=(5.67e-6*prop.ens-2.32e-3)*prop.ens+0.031;
@@ -174,10 +179,12 @@ ascat( double d, prop_type &prop, propa_type &propa)
 	  ascatv=0.0;
 	}
   else
-    { if(h0s>15.0)
+    {
+	  if(h0s>15.0)
 	    h0=h0s;
 	  else
-	    { th=prop.the[0]+prop.the[1]+d*prop.gme;
+	    {
+		  th=prop.the[0]+prop.the[1]+d*prop.gme;
 		  r2=2.0*prop.wn*th;
 		  r1=r2*prop.he[0];
 		  r2*=prop.he[1];
@@ -260,11 +267,13 @@ alos( double d, prop_type &prop, propa_type &propa)
   double s, sps, q;
   double alosv;
   if(d == 0.0)
-    { wls=0.021/(0.021+prop.wn*prop.dh/std::max(10e3,propa.dlsa));
+    {
+	  wls=0.021/(0.021+prop.wn*prop.dh/std::max(10e3,propa.dlsa));
       alosv=0.0;
 	}
   else
-    { q=(1.0-0.8*std::exp(-d/50e3))*prop.dh;
+    {
+	  q=(1.0-0.8*std::exp(-d/50e3))*prop.dh;
 	  s=0.78*q*std::exp(-pow(q/16.0,0.25));
 	  q=prop.he[0]+prop.he[1];
 	  sps=q/std::sqrt(d*d+q*q);
@@ -290,10 +299,12 @@ qlra( int kst[], int klimx, int mdvarx,
   std::complex<double> prop_zgnd(prop.zgndreal,prop.zgndimag);
   double q;
   for(int j=0;j < 2;++j)
-    { if(kst[j] <= 0)
+    {
+	  if(kst[j] <= 0)
 	    prop.he[j]=prop.hg[j];
 	  else
-	    { q=4.0;
+	    {
+		  q=4.0;
 		  if(kst[j]!=1)
 		    q=9.0;
 		  if(prop.hg[j] < 5.0)
@@ -307,11 +318,13 @@ qlra( int kst[], int klimx, int mdvarx,
   prop.mdp=1;
   propv.lvar=std::max(propv.lvar,3);
   if(mdvarx >= 0)
-    { propv.mdvar=mdvarx;
+    {
+	  propv.mdvar=mdvarx;
       propv.lvar=std::max(propv.lvar,4);
     }
   if(klimx>0)
-    { propv.klim=klimx;
+    {
+	  propv.klim=klimx;
 	  propv.lvar=5;
 	}
 }
