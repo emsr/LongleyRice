@@ -1045,7 +1045,8 @@ point_to_pointMDH(double elev[], double tht_m, double rht_m,
   if(int(q) < 0.0)
     propmode = 0;  // Line-Of-Sight Mode
   else
-    { if(int(q) == 0.0)
+    {
+	  if(int(q) == 0.0)
         propmode = 4;  // Single Horizon
       else if(int(q) > 0.0)
         propmode = 8;  // Double Horizon
@@ -1218,9 +1219,9 @@ ITMAreadBLoss(long ModVar, double deltaH, double tht_m, double rht_m,
 	int errnum;
 	double dbloss;
 	area(ModVar,deltaH,tht_m,rht_m,dist_km,TSiteCriteria,RSiteCriteria, 
-          eps_dielect,sgm_conductivity,eno_ns_surfref,
-		  frq_mhz,radio_climate,pol,pctTime,pctLoc,
-		  pctConf,dbloss,strmode,errnum);
+         eps_dielect,sgm_conductivity,eno_ns_surfref,
+		 frq_mhz,radio_climate,pol,pctTime,pctLoc,
+		 pctConf,dbloss,strmode,errnum);
 	return dbloss;
 }
 
