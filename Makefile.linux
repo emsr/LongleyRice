@@ -1,4 +1,12 @@
 
+#
+#  COPYRIGHT:
+#  Copyright 2006 - 2015
+#  Alion Science and Technology
+#  US Govt retains rights in accordance
+#  with DoD FAR Supp 252.227 - 7013.
+#
+
 
 OUT_BASE = itm
 ABI = 64
@@ -24,6 +32,7 @@ OS_DIR = $(PROD_DIR)/mingw64
 ABI_DIR = $(OS_DIR)/$(ABI)
 DOCS_DIR = $(PROD_DIR)/docs
 HTML_DIR = $(DOCS_DIR)/html
+TARBALL_DIR = $(OUT_BASE)
 
 COPY = cp -f
 SED = sed
@@ -114,18 +123,25 @@ $(BIN_DIR)/RunITMDLL$(EXE_EXT): $(OBJ_DIR)/RunITMDLL$(OBJ_EXT) $(LIB_DIR)/libITM
 	$(CXX) -o $(BIN_DIR)/RunITMDLL$(EXE_EXT) $(OBJ_DIR)/RunITMDLL$(OBJ_EXT) -L$(LIB_DIR) -lITMDLL
 
 
+check:
+	LD_LIBRARY_PATH=$(LIB_DIR):$(CXX_LIB_DIR):$$LD_LIBRARY_PATH $(BIN_DIR)/RunITMDLL$(EXE_EXT) < itm_1.in > $(BIN_DIR)/itm_1.out
+	LD_LIBRARY_PATH=$(LIB_DIR):$(CXX_LIB_DIR):$$LD_LIBRARY_PATH $(BIN_DIR)/RunITM$(EXE_EXT) < itm_1.in > $(BIN_DIR)/itm_1.out
+	dos2unix $(BIN_DIR)/*.out
+
+
 clean:
 	rm -rf $(OUT_DIR)/obj
 	rm -f $(OUT_DIR)/*
 
 
 tarball:
-	rm -rf itm_cpp
-	mkdir itm_cpp
-	cp Makefile $(INCS) $(SRCS) $(BIN_SRCS) *.dat *.in *.txt TODO README Doxyfile itm_cpp
-	tar -cvf itm_cpp.tar itm_cpp
-	bzip2 -f itm_cpp.tar
-	rm -rf itm_cpp
+	rm -rf $(TARBALL_DIR)
+	mkdir $(TARBALL_DIR)
+	$(COPY) TODO README .gitignore Doxyfile Makefile* $(INCS) $(SRCS) $(BIN_SRCS) *.dat *.in *.out $(TARBALL_DIR)
+	tar -cvf $(TARBALL_DIR).tar $(TARBALL_DIR)
+	bzip2 -f $(TARBALL_DIR).tar
+	rm -rf $(TARBALL_DIR)
+
 
 
 $(OUT_DIR):
@@ -182,4 +198,3 @@ $(HTML_DIR): $(DOCS_DIR)
 	if test ! -d $(HTML_DIR); then \
 	  mkdir $(HTML_DIR); \
 	fi
-

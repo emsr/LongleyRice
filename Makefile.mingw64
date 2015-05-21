@@ -1,3 +1,10 @@
+#
+#  COPYRIGHT:
+#  Copyright 2006 - 2015
+#  Alion Science and Technology
+#  US Govt retains rights in accordance
+#  with DoD FAR Supp 252.227 - 7013.
+#
 
 
 OUT_BASE = itm
@@ -19,26 +26,27 @@ else
 endif
 INST_BIN_DIR = $(INST_DIR)/bin
 CD_DIR = CD
-PROD_DIR = $(CD_DIR)/itm-$(VERSION_TIREM)
+PROD_DIR = $(CD_DIR)/$(OUT_BASE)-$(VERSION_TIREM)
 OS_DIR = $(PROD_DIR)/mingw64
 ABI_DIR = $(OS_DIR)/$(ABI)
 DOCS_DIR = $(PROD_DIR)/docs
 HTML_DIR = $(DOCS_DIR)/html
+TARBALL_DIR = $(OUT_BASE)
 
 COPY = cp -f
 SED = sed
 CXX_DIR = /usr
 CXX_BIN_DIR = $(CXX_DIR)/bin
-CXX_OPTS = 
-CXX = $(CXX_BIN_DIR)/g++ -std=c++1y $(CXX_OPTS)
+CXX_OPTS = -fdiagnostics-color=always
+CXX = $(CXX_BIN_DIR)/g++ -std=gnu++14 $(CXX_OPTS)
 ifeq ($(ABI),64)
   CXX_LIB_DIR = /usr/x86_64-w64-mingw32/sys-root/mingw/bin
-  CXX = $(CXX_BIN_DIR)/x86_64-w64-mingw32-g++ -std=c++1y $(CXX_OPTS)
+  CXX = $(CXX_BIN_DIR)/x86_64-w64-mingw32-g++ -std=gnu++14 $(CXX_OPTS)
   AR = $(CXX_BIN_DIR)/x86_64-w64-mingw32-ar
   RANLIB = $(CXX_BIN_DIR)/x86_64-w64-mingw32-ranlib
 else
   CXX_LIB_DIR = /usr/i686-w64-mingw32/sys-root/mingw/bin
-  CXX = $(CXX_BIN_DIR)/i686-w64-mingw32-g++ -std=c++1y $(CXX_OPTS)
+  CXX = $(CXX_BIN_DIR)/i686-w64-mingw32-g++ -std=gnu++14 $(CXX_OPTS)
   AR = $(CXX_BIN_DIR)/i686-w64-mingw32-ar
   RANLIB = $(CXX_BIN_DIR)/i686-w64-mingw32-ranlib
 endif
@@ -50,8 +58,8 @@ LIB_DL =
 #  These flags control library symbol visibility.
 VIS_DEFAULT = -fvisibility=default
 VIS_HIDDEN = -fvisibility=hidden
-DLL_EXT = .dll
 EXE_EXT = .exe
+DLL_EXT = .dll
 LIB_EXT = .lib
 OBJ_EXT = .o
 DLL_PRE = 
@@ -71,6 +79,7 @@ BINS = \
   $(BIN_DIR)/RunITM$(EXE_EXT) \
   $(BIN_DIR)/RunITMDLL$(EXE_EXT)
 
+
 all: $(OBJ_DIR) \
      orig \
      new
@@ -81,10 +90,10 @@ all: $(OBJ_DIR) \
 new: $(OBJ_DIR) $(BIN_DIR)/RunITM$(EXE_EXT) $(LIB_DIR)/libITM$(DLL_EXT)
 
 $(OBJ_DIR)/ITM$(OBJ_EXT): ITM.h $(SRC_DIR)/ITM.cpp
-	$(CXX) -c -fPIC -o $(OBJ_DIR)/ITM$(OBJ_EXT) ITM.cpp
+	$(CXX) -c -o $(OBJ_DIR)/ITM$(OBJ_EXT) ITM.cpp
 
 $(LIB_DIR)/libITM$(DLL_EXT): $(OBJ_DIR)/ITM$(OBJ_EXT)
-	$(CXX) -shared -fPIC -o $(LIB_DIR)/libITM$(DLL_EXT) $(OBJ_DIR)/ITM$(OBJ_EXT)
+	$(CXX) -shared -o $(LIB_DIR)/libITM$(DLL_EXT) $(OBJ_DIR)/ITM$(OBJ_EXT)
 
 $(OBJ_DIR)/RunITM$(OBJ_EXT): $(SRC_DIR)/RunITM.cpp
 	$(CXX) -c -o $(OBJ_DIR)/RunITM$(OBJ_EXT) RunITM.cpp
@@ -98,10 +107,10 @@ $(BIN_DIR)/RunITM$(EXE_EXT): $(OBJ_DIR)/RunITM$(OBJ_EXT) $(LIB_DIR)/libITM$(DLL_
 orig: $(OBJ_DIR) $(BIN_DIR)/RunITMDLL$(EXE_EXT) $(LIB_DIR)/libITMDLL$(DLL_EXT)
 
 $(OBJ_DIR)/ITMDLL$(OBJ_EXT): $(SRC_DIR)/ITMDLL.cpp
-	$(CXX) -c -fPIC -o $(OBJ_DIR)/ITMDLL$(OBJ_EXT) $(SRC_DIR)/ITMDLL.cpp
+	$(CXX) -c -o $(OBJ_DIR)/ITMDLL$(OBJ_EXT) $(SRC_DIR)/ITMDLL.cpp
 
 $(LIB_DIR)/libITMDLL$(DLL_EXT): $(OBJ_DIR)/ITMDLL$(OBJ_EXT)
-	$(CXX) -shared -fPIC -o $(LIB_DIR)/libITMDLL$(DLL_EXT) $(OBJ_DIR)/ITMDLL$(OBJ_EXT)
+	$(CXX) -shared -o $(LIB_DIR)/libITMDLL$(DLL_EXT) $(OBJ_DIR)/ITMDLL$(OBJ_EXT)
 
 $(OBJ_DIR)/RunITMDLL$(OBJ_EXT): $(SRC_DIR)/RunITMDLL.cpp
 	$(CXX) -c -o $(OBJ_DIR)/RunITMDLL$(OBJ_EXT) $(SRC_DIR)/RunITMDLL.cpp
@@ -110,18 +119,24 @@ $(BIN_DIR)/RunITMDLL$(EXE_EXT): $(OBJ_DIR)/RunITMDLL$(OBJ_EXT) $(LIB_DIR)/libITM
 	$(CXX) -o $(BIN_DIR)/RunITMDLL$(EXE_EXT) $(OBJ_DIR)/RunITMDLL$(OBJ_EXT) -L$(LIB_DIR) -lITMDLL
 
 
+check:
+	LD_LIBRARY_PATH=$(LIB_DIR):$(CXX_LIB_DIR):$$LD_LIBRARY_PATH $(BIN_DIR)/RunITMDLL$(EXE_EXT) < itm_1.in > $(BIN_DIR)/itm_1.out
+	LD_LIBRARY_PATH=$(LIB_DIR):$(CXX_LIB_DIR):$$LD_LIBRARY_PATH $(BIN_DIR)/RunITM$(EXE_EXT) < itm_1.in > $(BIN_DIR)/itm_1.out
+	dos2unix $(BIN_DIR)/*.out
+
+
 clean:
 	rm -rf $(OUT_DIR)/obj
 	rm -f $(OUT_DIR)/*
 
 
 tarball:
-	rm -rf itm_cpp
-	mkdir itm_cpp
-	cp Makefile $(INCS) $(SRCS) $(BIN_SRCS) *.dat *.in *.txt TODO README Doxyfile itm_cpp
-	tar -cvf itm_cpp.tar itm_cpp
-	bzip2 -f itm_cpp.tar
-	rm -rf itm_cpp
+	rm -rf $(TARBALL_DIR)
+	mkdir $(TARBALL_DIR)
+	$(COPY) TODO README .gitignore Doxyfile Makefile* $(INCS) $(SRCS) $(BIN_SRCS) *.dat *.in *.out $(TARBALL_DIR)
+	tar -cvf $(TARBALL_DIR).tar $(TARBALL_DIR)
+	bzip2 -f $(TARBALL_DIR).tar
+	rm -rf $(TARBALL_DIR)
 
 
 $(OUT_DIR):
@@ -178,4 +193,3 @@ $(HTML_DIR): $(DOCS_DIR)
 	if test ! -d $(HTML_DIR); then \
 	  mkdir $(HTML_DIR); \
 	fi
-
