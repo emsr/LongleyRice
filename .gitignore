@@ -24,3 +24,6 @@ include/
 lib/
 lib64/
 bin/
+
+itm.tar.bz2
+
