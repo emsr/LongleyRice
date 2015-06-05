@@ -1,3 +1,4 @@
+
 #
 #  COPYRIGHT:
 #  Copyright 2006 - 2015
@@ -38,29 +39,33 @@ SED = sed
 CXX_DIR = /usr
 CXX_BIN_DIR = $(CXX_DIR)/bin
 CXX_OPTS = -fdiagnostics-color=always
-CXX = $(CXX_BIN_DIR)/g++ -std=c++14 $(CXX_OPTS)
-ifeq ($(ABI),64)
-  CXX_LIB_DIR = /usr/x86_64-w64-mingw32/sys-root/mingw/bin
-  CXX = $(CXX_BIN_DIR)/x86_64-w64-mingw32-g++ -std=c++14 $(CXX_OPTS)
-  AR = $(CXX_BIN_DIR)/x86_64-w64-mingw32-ar
-  RANLIB = $(CXX_BIN_DIR)/x86_64-w64-mingw32-ranlib
+CXX = $(CXX_BIN_DIR)/clang++ -std=c++14 $(CXX_OPTS)
+ifneq ("$(wildcard $(CXX_BIN_DIR)/ar)","")
+  AR = "$(CXX_BIN_DIR)/ar"
 else
-  CXX_LIB_DIR = /usr/i686-w64-mingw32/sys-root/mingw/bin
-  CXX = $(CXX_BIN_DIR)/i686-w64-mingw32-g++ -std=c++14 $(CXX_OPTS)
-  AR = $(CXX_BIN_DIR)/i686-w64-mingw32-ar
-  RANLIB = $(CXX_BIN_DIR)/i686-w64-mingw32-ranlib
+  AR = ar
+endif
+ifneq ("$(wildcard $(CXX_BIN_DIR)/ranlib)","")
+  RANLIB = "$(CXX_BIN_DIR)/ranlib"
+else
+  RANLIB = ranlib
+endif
+ifeq ($(ABI),64)
+  CXX_LIB_DIR = $(CXX_DIR)/lib64
+else
+  CXX_LIB_DIR = $(CXX_DIR)/lib32
 endif
 OPT = -O3
 #OPT = -g
-CXXFLAGS = -Wall -Wextra -Wno-deprecated-declarations -Wold-style-cast $(OPT) -m$(ABI) -c
-OFLAGS = -Wall -Wextra $(OPT) -m$(ABI) -static-libgcc -static-libstdc++
-LIB_DL = 
+CXXFLAGS = -Wall -Wextra -Wno-deprecated-declarations -Wold-style-cast $(OPT) -m$(ABI) -fPIC -c
+OFLAGS = -Wall -Wextra $(OPT) -m$(ABI) -fPIC -Wl,-rpath,$(CXX_LIB_DIR)
+LIB_DL = -ldl
 #  These flags control library symbol visibility.
 VIS_DEFAULT = -fvisibility=default
 VIS_HIDDEN = -fvisibility=hidden
-EXE_EXT = .exe
-DLL_EXT = .dll
-LIB_EXT = .lib
+DLL_EXT = .so
+EXE_EXT = 
+LIB_EXT = .a
 OBJ_EXT = .o
 DLL_PRE = 
 
