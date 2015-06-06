@@ -53,24 +53,24 @@ fht(double x, double pk)
   if (x < 200.0)
     {
       w = -std::log(pk);
-	  if (pk < 1e-5 || x * std::pow(w, 3.0) > 5495.0)
-	    {
+      if (pk < 1e-5 || x * std::pow(w, 3.0) > 5495.0)
+        {
           fhtv = -117.0;
-		  if (x > 1.0)
-		    fhtv += 17.372 * std::log(x);
-		}
-	  else
-		fhtv = 2.5e-5 * x * x / pk - 8.686 * w - 15.0;
-	}
+          if (x > 1.0)
+            fhtv += 17.372 * std::log(x);
+        }
+      else
+        fhtv = 2.5e-5 * x * x / pk - 8.686 * w - 15.0;
+    }
   else
-	{
+    {
       fhtv = 0.05751 * x - 4.343 * std::log(x);
-	  if (x < 2000.0)
-	    {
+      if (x < 2000.0)
+        {
           w = 0.0134 * x * std::exp(-0.005 * x);
           fhtv = (1.0 - w) * fhtv + w * (17.372 * std::log(x) - 117.0);
-		}
-	}
+        }
+    }
   return fhtv;
 }
 
@@ -88,14 +88,14 @@ h0f(double r, double et)
     {
       it = 1;
       q = 0.0;
-	}
+    }
   else if (it >= 5)
     {
       it = 5;
       q = 0.0;
-	}
+    }
   else
-	q = et - it;
+    q = et - it;
   x = std::pow(1.0 / r, 2.0);
   h0fv = 4.343 * std::log((a[it-1]*x+b[it-1])*x+1.0);
   if (q != 0.0)
@@ -129,44 +129,44 @@ adiff(double d, prop_type & prop, propa_type & propa)
   double a, q, pk, ds, th, wa, ar, wd, adiffv;
   if (d == 0)
     {
-	  q = prop.hg[0] * prop.hg[1];
-	  qk = prop.he[0] * prop.he[1] - q;
+      q = prop.hg[0] * prop.hg[1];
+      qk = prop.he[0] * prop.he[1] - q;
       if (prop.mdp < 0.0)
-	    q += 10.0;
-	  wd1 = std::sqrt(1.0 + qk / q);
-	  xd1 = propa.dla + propa.tha / prop.gme;
-	  q = (1.0-0.8*std::exp(-propa.dlsa/50e3))*prop.dh;
-	  q *= 0.78 * std::exp(-std::pow(q / 16.0, 0.25));
+        q += 10.0;
+      wd1 = std::sqrt(1.0 + qk / q);
+      xd1 = propa.dla + propa.tha / prop.gme;
+      q = (1.0-0.8*std::exp(-propa.dlsa/50e3))*prop.dh;
+      q *= 0.78 * std::exp(-std::pow(q / 16.0, 0.25));
       afo = std::min(15.0, 2.171 * std::log(1.0 + 4.77e-4 * prop.hg[0] * prop.hg[1] * prop.wn * q));
-	  qk = 1.0 / std::abs(prop_zgnd);
-	  aht = 20.0;
-	  xht = 0.0;
-	  for(int j = 0; j < 2; ++j)
-	    {
-		  a = 0.5 * std::pow(prop.dl[j], 2.0) / prop.he[j];
-		  wa = std::pow(a * prop.wn, THIRD);
-		  pk = qk / wa;
-		  q = (1.607 - pk) * 151.0 * wa * prop.dl[j] / a;
-		  xht += q;
-		  aht += fht(q, pk);
-		}
-	  adiffv = 0.0;
-	}
+      qk = 1.0 / std::abs(prop_zgnd);
+      aht = 20.0;
+      xht = 0.0;
+      for(int j = 0; j < 2; ++j)
+        {
+          a = 0.5 * std::pow(prop.dl[j], 2.0) / prop.he[j];
+          wa = std::pow(a * prop.wn, THIRD);
+          pk = qk / wa;
+          q = (1.607 - pk) * 151.0 * wa * prop.dl[j] / a;
+          xht += q;
+          aht += fht(q, pk);
+        }
+      adiffv = 0.0;
+    }
   else
     {
-	  th = propa.tha + d * prop.gme;
-	  ds = d - propa.dla;
-	  q = 0.0795775 * prop.wn * ds * std::pow(th, 2.0);
-	  adiffv = aknfe(q * prop.dl[0] / (ds + prop.dl[0])) + aknfe(q * prop.dl[1] / (ds + prop.dl[1]));
-	  a = ds / th;
-	  wa = std::pow(a * prop.wn, THIRD);
-	  pk = qk / wa;
-	  q = (1.607 - pk) * 151.0 * wa * th + xht;
-	  ar = 0.05751 * q - 4.343 * std::log(q) - aht;
-	  q = (wd1 + xd1 / d) * std::min(((1.0 - 0.8 * std::exp(-d / 50e3)) * prop.dh * prop.wn), 6283.2);
+      th = propa.tha + d * prop.gme;
+      ds = d - propa.dla;
+      q = 0.0795775 * prop.wn * ds * std::pow(th, 2.0);
+      adiffv = aknfe(q * prop.dl[0] / (ds + prop.dl[0])) + aknfe(q * prop.dl[1] / (ds + prop.dl[1]));
+      a = ds / th;
+      wa = std::pow(a * prop.wn, THIRD);
+      pk = qk / wa;
+      q = (1.607 - pk) * 151.0 * wa * th + xht;
+      ar = 0.05751 * q - 4.343 * std::log(q) - aht;
+      q = (wd1 + xd1 / d) * std::min(((1.0 - 0.8 * std::exp(-d / 50e3)) * prop.dh * prop.wn), 6283.2);
       wd = 25.1 / (25.1 + std::sqrt(q));
-	  adiffv = ar * wd + (1.0 - wd) * adiffv + afo;
-	}
+      adiffv = ar * wd + (1.0 - wd) * adiffv + afo;
+    }
   return adiffv;
 }
 
@@ -180,50 +180,50 @@ ascat(double d, prop_type & prop, propa_type & propa)
   double ascatv;
   if (d == 0.0)
     {
-	  ad = prop.dl[0] - prop.dl[1];
-	  rr = prop.he[1] / prop.he[0];
-	  if(ad < 0.0)
-	    {
-		  ad =- ad;
-		  rr = 1.0 / rr;
+      ad = prop.dl[0] - prop.dl[1];
+      rr = prop.he[1] / prop.he[0];
+      if(ad < 0.0)
+        {
+          ad =- ad;
+          rr = 1.0 / rr;
         }
-	  etq = (5.67e-6 * prop.ens - 2.32e-3) * prop.ens + 0.031;
-	  h0s = -15.0;
-	  ascatv = 0.0;
-	}
+      etq = (5.67e-6 * prop.ens - 2.32e-3) * prop.ens + 0.031;
+      h0s = -15.0;
+      ascatv = 0.0;
+    }
   else
     {
-	  if (h0s > 15.0)
-	    h0 = h0s;
-	  else
-	    {
-		  th = prop.the[0] + prop.the[1] + d * prop.gme;
-		  r2 = 2.0 * prop.wn * th;
-		  r1 = r2 * prop.he[0];
-		  r2 *= prop.he[1];
-		  if (r1 < 0.2 && r2 < 0.2)
-		    return 1001.0;
-		  ss = (d - ad) / (d + ad);
-		  q = rr / ss;
-		  ss = std::max(0.1, ss);
-		  q = std::min(std::max(0.1, q), 10.0);
-		  z0 = (d - ad) * (d + ad) * th * 0.25 / d;
-		  et = (etq * std::exp(-pow(std::min(1.7, z0 / 8.0e3), 6.0)) + 1.0) * z0 / 1.7556e3;
-		  ett = std::max(et, 1.0);
-		  h0 = (h0f(r1, ett) + h0f(r2, ett)) * 0.5;
-		  h0 += std::min(h0, (1.38 - std::log(ett)) * std::log(ss) * std::log(q) * 0.49);
-		  h0 = FORTRAN_DIM(h0, 0.0);
-		  if (et < 1.0)
-		    h0 = et * h0 + (1.0 - et) * 4.343 * std::log(pow((1.0 + 1.4142 / r1)
-			   * (1.0 + 1.4142 / r2), 2.0) * (r1 + r2) / (r1 + r2 + 2.8284));
-		  if (h0 > 15.0 && h0s >= 0.0)
-		    h0 = h0s;
-		}
+      if (h0s > 15.0)
+        h0 = h0s;
+      else
+        {
+          th = prop.the[0] + prop.the[1] + d * prop.gme;
+          r2 = 2.0 * prop.wn * th;
+          r1 = r2 * prop.he[0];
+          r2 *= prop.he[1];
+          if (r1 < 0.2 && r2 < 0.2)
+            return 1001.0;
+          ss = (d - ad) / (d + ad);
+          q = rr / ss;
+          ss = std::max(0.1, ss);
+          q = std::min(std::max(0.1, q), 10.0);
+          z0 = (d - ad) * (d + ad) * th * 0.25 / d;
+          et = (etq * std::exp(-pow(std::min(1.7, z0 / 8.0e3), 6.0)) + 1.0) * z0 / 1.7556e3;
+          ett = std::max(et, 1.0);
+          h0 = (h0f(r1, ett) + h0f(r2, ett)) * 0.5;
+          h0 += std::min(h0, (1.38 - std::log(ett)) * std::log(ss) * std::log(q) * 0.49);
+          h0 = FORTRAN_DIM(h0, 0.0);
+          if (et < 1.0)
+            h0 = et * h0 + (1.0 - et) * 4.343 * std::log(pow((1.0 + 1.4142 / r1)
+               * (1.0 + 1.4142 / r2), 2.0) * (r1 + r2) / (r1 + r2 + 2.8284));
+          if (h0 > 15.0 && h0s >= 0.0)
+            h0 = h0s;
+        }
       h0s = h0;
-	  th = propa.tha + d * prop.gme;
-	  ascatv = ahd(th * d) + 4.343 * std::log(47.7 * prop.wn * pow(th, 4.0))
-	         - 0.1 * (prop.ens - 301.0) * std::exp(-th * d / 40e3) + h0;
-	}
+      th = propa.tha + d * prop.gme;
+      ascatv = ahd(th * d) + 4.343 * std::log(47.7 * prop.wn * pow(th, 4.0))
+             - 0.1 * (prop.ens - 301.0) * std::exp(-th * d / 40e3) + h0;
+    }
   return ascatv;
 }
 
@@ -287,25 +287,25 @@ alos(double d, prop_type & prop, propa_type & propa)
   double alosv;
   if (d == 0.0)
     {
-	  wls = 0.021 / (0.021 + prop.wn * prop.dh / std::max(10e3, propa.dlsa));
+      wls = 0.021 / (0.021 + prop.wn * prop.dh / std::max(10e3, propa.dlsa));
       alosv = 0.0;
-	}
+    }
   else
     {
-	  q = (1.0 - 0.8 * std::exp(-d / 50e3)) * prop.dh;
-	  s = 0.78 * q * std::exp(-std::pow(q / 16.0, 0.25));
-	  q = prop.he[0] + prop.he[1];
-	  sps = q / std::sqrt(d * d + q * q);
-	  r = (sps - prop_zgnd) / (sps + prop_zgnd)*std::exp(-std::min(10.0,prop.wn*s*sps));
-	  q = abq_alos(r);
-	  if (q < 0.25 || q < sps)
-	    r *= std::sqrt(sps / q);
-	  alosv = propa.emd*d + propa.aed;
-	  q = 2.0 * prop.wn * prop.he[0] * prop.he[1] / d;
-	  if (q > 1.57)
-	    q = 3.14 - 2.4649 / q;
-	  alosv = (-4.343 * std::log(abq_alos(std::complex<double>(cos(q), -sin(q)) + r)) - alosv)
-	        * wls + alosv;
+      q = (1.0 - 0.8 * std::exp(-d / 50e3)) * prop.dh;
+      s = 0.78 * q * std::exp(-std::pow(q / 16.0, 0.25));
+      q = prop.he[0] + prop.he[1];
+      sps = q / std::sqrt(d * d + q * q);
+      r = (sps - prop_zgnd) / (sps + prop_zgnd)*std::exp(-std::min(10.0,prop.wn*s*sps));
+      q = abq_alos(r);
+      if (q < 0.25 || q < sps)
+        r *= std::sqrt(sps / q);
+      alosv = propa.emd*d + propa.aed;
+      q = 2.0 * prop.wn * prop.he[0] * prop.he[1] / d;
+      if (q > 1.57)
+        q = 3.14 - 2.4649 / q;
+      alosv = (-4.343 * std::log(abq_alos(std::complex<double>(cos(q), -sin(q)) + r)) - alosv)
+            * wls + alosv;
     }
   return alosv;
 }
@@ -320,34 +320,34 @@ qlra(int kst[], int klimx, int mdvarx,
   double q;
   for (int j = 0; j < 2; ++j)
     {
-	  if (kst[j] <= 0)
-	    prop.he[j] = prop.hg[j];
-	  else
-	    {
-		  q = 4.0;
-		  if (kst[j] != 1)
-		    q = 9.0;
-		  if (prop.hg[j] < 5.0)
-		    q *= std::sin(0.3141593*prop.hg[j]);
-		  prop.he[j] = prop.hg[j]
+      if (kst[j] <= 0)
+        prop.he[j] = prop.hg[j];
+      else
+        {
+          q = 4.0;
+          if (kst[j] != 1)
+            q = 9.0;
+          if (prop.hg[j] < 5.0)
+            q *= std::sin(0.3141593*prop.hg[j]);
+          prop.he[j] = prop.hg[j]
                      + (1.0 + q) * std::exp(-std::min(20.0, 2.0 * prop.hg[j] / std::max(1e-3, prop.dh)));
-	    }
-	  q = std::sqrt(2.0 * prop.he[j] / prop.gme);
-	  prop.dl[j] = q * std::exp(-0.07 * std::sqrt(prop.dh / std::max(prop.he[j], 5.0)));
-	  prop.the[j] = (0.65 * prop.dh * (q / prop.dl[j] - 1.0) - 2.0 * prop.he[j]) / q;
-	}
+        }
+      q = std::sqrt(2.0 * prop.he[j] / prop.gme);
+      prop.dl[j] = q * std::exp(-0.07 * std::sqrt(prop.dh / std::max(prop.he[j], 5.0)));
+      prop.the[j] = (0.65 * prop.dh * (q / prop.dl[j] - 1.0) - 2.0 * prop.he[j]) / q;
+    }
   prop.mdp = 1;
   propv.lvar = std::max(propv.lvar, 3);
   if (mdvarx >= 0)
     {
-	  propv.mdvar = mdvarx;
+      propv.mdvar = mdvarx;
       propv.lvar = std::max(propv.lvar, 4);
     }
   if (klimx > 0)
     {
-	  propv.klim = klimx;
-	  propv.lvar = 5;
-	}
+      propv.klim = klimx;
+      propv.lvar = 5;
+    }
 }
 
 
@@ -367,40 +367,40 @@ lrprop(double d,
 
   if (prop.mdp != 0)
     {
-	  for (j = 0; j < 2; ++j)
-	    propa.dls[j] = std::sqrt(2.0 * prop.he[j] / prop.gme);
-	  propa.dlsa = propa.dls[0] + propa.dls[1];
-	  propa.dla = prop.dl[0] + prop.dl[1];
-	  propa.tha = std::max(prop.the[0] + prop.the[1], -propa.dla * prop.gme);
-	  wlos = false;
-	  wscat = false;
-	  if (prop.wn < 0.838 || prop.wn > 210.0)
+      for (j = 0; j < 2; ++j)
+        propa.dls[j] = std::sqrt(2.0 * prop.he[j] / prop.gme);
+      propa.dlsa = propa.dls[0] + propa.dls[1];
+      propa.dla = prop.dl[0] + prop.dl[1];
+      propa.tha = std::max(prop.the[0] + prop.the[1], -propa.dla * prop.gme);
+      wlos = false;
+      wscat = false;
+      if (prop.wn < 0.838 || prop.wn > 210.0)
         prop.kwx = std::max(prop.kwx, 1);
-	  for (j = 0; j < 2; ++j)
-	    if (prop.hg[j] < 1.0 || prop.hg[j] > 1000.0)
+      for (j = 0; j < 2; ++j)
+        if (prop.hg[j] < 1.0 || prop.hg[j] > 1000.0)
           prop.kwx = std::max(prop.kwx, 1);
-	  for (j = 0; j < 2; ++j)
-	    if (std::abs(prop.the[j]) > 200e-3
+      for (j = 0; j < 2; ++j)
+        if (std::abs(prop.the[j]) > 200e-3
          || prop.dl[j] < 0.1 * propa.dls[j]
-		 || prop.dl[j] > 3.0 * propa.dls[j])
+         || prop.dl[j] > 3.0 * propa.dls[j])
         prop.kwx = std::max(prop.kwx, 3);
-	  if (prop.ens < 250.0 || prop.ens > 400.0
+      if (prop.ens < 250.0 || prop.ens > 400.0
        || prop.gme < 75e-9 || prop.gme > 250e-9
        || prop_zgnd.real() <= std::abs(prop_zgnd.imag())
        || prop.wn  < 0.419 || prop.wn  > 420.0 )
         prop.kwx = 4;
       for (j = 0; j < 2; ++j)
-	    if (prop.hg[j] < 0.5 || prop.hg[j] > 3000.0)
+        if (prop.hg[j] < 0.5 || prop.hg[j] > 3000.0)
           prop.kwx = 4;
-	  dmin = std::abs(prop.he[0] - prop.he[1]) / 200e-3;
-	  q = adiff(0.0, prop, propa);
-	  xae = std::pow(prop.wn * std::pow(prop.gme, 2), -THIRD);
-	  d3 = std::max(propa.dlsa, 1.3787 * xae + propa.dla);
-	  d4 = d3 + 2.7574 * xae;
-	  a3 = adiff(d3, prop, propa);
-	  a4 = adiff(d4, prop, propa);
-	  propa.emd = (a4 - a3) / (d4 - d3);
-	  propa.aed = a3 - propa.emd * d3;
+      dmin = std::abs(prop.he[0] - prop.he[1]) / 200e-3;
+      q = adiff(0.0, prop, propa);
+      xae = std::pow(prop.wn * std::pow(prop.gme, 2), -THIRD);
+      d3 = std::max(propa.dlsa, 1.3787 * xae + propa.dla);
+      d4 = d3 + 2.7574 * xae;
+      a3 = adiff(d3, prop, propa);
+      a4 = adiff(d4, prop, propa);
+      propa.emd = (a4 - a3) / (d4 - d3);
+      propa.aed = a3 - propa.emd * d3;
      }
   if (prop.mdp >= 0)
     {
@@ -409,31 +409,31 @@ lrprop(double d,
     }
   if (prop.dist > 0.0)
     {
-	  if (prop.dist > 1000e3)
+      if (prop.dist > 1000e3)
         prop.kwx = std::max(prop.kwx, 1);
-	  if (prop.dist < dmin)
+      if (prop.dist < dmin)
         prop.kwx = std::max(prop.kwx, 3);
-	  if (prop.dist < 1e3 || prop.dist > 2000e3)
+      if (prop.dist < 1e3 || prop.dist > 2000e3)
         prop.kwx = 4;
     }
   if (prop.dist < propa.dlsa)
     {
-	  if (!wlos)
-	    {
+      if (!wlos)
+        {
           q = alos(0.0, prop, propa);
-			d2 = propa.dlsa;
-			a2 = propa.aed + d2 * propa.emd;
-			d0 = 1.908 * prop.wn * prop.he[0] * prop.he[1];
-          	if (propa.aed >= 0.0)
+            d2 = propa.dlsa;
+            a2 = propa.aed + d2 * propa.emd;
+            d0 = 1.908 * prop.wn * prop.he[0] * prop.he[1];
+              if (propa.aed >= 0.0)
               {
                 d0 = std::min(d0, 0.5 * propa.dla);
                 d1 = d0 + 0.25 * (propa.dla - d0);
               }
-			else
+            else
               d1 = std::max(-propa.aed / propa.emd, 0.25 * propa.dla);
-			a1 = alos(d1, prop, propa);
-			wq = false;
-			if (d0 < d1)
+            a1 = alos(d1, prop, propa);
+            wq = false;
+            if (d0 < d1)
               {
                 a0 = alos(d0, prop, propa);
                 q = std::log(d2 / d0);
@@ -459,42 +459,42 @@ lrprop(double d,
                 if (propa.ak1 == 0.0)
                   propa.ak1 = propa.emd;
               }
-			propa.ael = a2 - propa.ak1 * d2 - propa.ak2 * std::log(d2);
-			wlos = true;
-		}
+            propa.ael = a2 - propa.ak1 * d2 - propa.ak2 * std::log(d2);
+            wlos = true;
+        }
       if (prop.dist > 0.0)
         prop.aref = propa.ael
                   + propa.ak1 * prop.dist
-	              + propa.ak2 * std::log(prop.dist);
+                  + propa.ak2 * std::log(prop.dist);
     }
   if (prop.dist <= 0.0 || prop.dist >= propa.dlsa)
     {
       if (!wscat)
-	    { 
-		  q = ascat(0.0, prop,propa);
-		  d5 = propa.dla + 200e3;
-		  d6 = d5 + 200e3;
-		  a6 = ascat(d6, prop, propa);
-		  a5 = ascat(d5, prop, propa);
-		  if (a5 < 1000.0)
-		    {
+        { 
+          q = ascat(0.0, prop,propa);
+          d5 = propa.dla + 200e3;
+          d6 = d5 + 200e3;
+          a6 = ascat(d6, prop, propa);
+          a5 = ascat(d5, prop, propa);
+          if (a5 < 1000.0)
+            {
               propa.ems = (a6 - a5) / 200e3;
-		      propa.dx = std::max(propa.dlsa,
+              propa.dx = std::max(propa.dlsa,
                                   std::max(propa.dla + 0.3 * xae * std::log(47.7 * prop.wn),
-			                              (a5 - propa.aed - propa.ems * d5) / (propa.emd - propa.ems)));
-		      propa.aes = (propa.emd - propa.ems) * propa.dx + propa.aed;
-		    }
-		  else
-		    {
+                                          (a5 - propa.aed - propa.ems * d5) / (propa.emd - propa.ems)));
+              propa.aes = (propa.emd - propa.ems) * propa.dx + propa.aed;
+            }
+          else
+            {
               propa.ems = propa.emd;
-		      propa.aes = propa.aed;
-		      propa.dx = 10.e6;
-		    }
-		  wscat = true;
-	    }
-	  if (prop.dist > propa.dx)
+              propa.aes = propa.aed;
+              propa.dx = 10.e6;
+            }
+          wscat = true;
+        }
+      if (prop.dist > propa.dx)
         prop.aref = propa.aes + propa.ems * prop.dist;
-	  else
+      else
         prop.aref = propa.aed + propa.emd * prop.dist;
     }
   prop.aref = std::max(prop.aref, 0.0);
@@ -518,8 +518,8 @@ avar(double zzt, double zzl, double zzc,
   static int kdv;
   static double dexa, de, vmd, vs0, sgl, sgtm, sgtp, sgtd, tgtd,
                 gm, gp, cv1, cv2, yv1, yv2, yv3, csm1, csm2, ysm1, ysm2,
-				ysm3, csp1, csp2, ysp1, ysp2, ysp3, csd1, zd, cfm1, cfm2,
-				cfm3, cfp1, cfp2, cfp3;
+                ysm3, csp1, csp2, ysp1, ysp2, ysp3, csd1, zd, cfm1, cfm2,
+                cfm3, cfp1, cfp2, cfp3;
   double bv1[7]{-9.67,-0.62,1.26,-9.21,-0.62,-0.39,3.15};
   double bv2[7]{12.7,9.19,15.5,9.05,9.19,2.86,857.9};
   double xv1[7]{144.9e3,228.9e3,262.6e3,84.1e3,228.9e3,141.7e3,2222.e3};
@@ -553,82 +553,82 @@ avar(double zzt, double zzl, double zzc,
       switch (propv.lvar)
         {
         default:
-		     if (propv.klim <= 0 || propv.klim > 7)
-			   {
+             if (propv.klim <= 0 || propv.klim > 7)
+               {
                  propv.klim = 5;
-			     temp_klim = 4;
-			     {
+                 temp_klim = 4;
+                 {
                    prop.kwx = std::max(prop.kwx, 2);
-				 }
-			   }
-			 cv1 = bv1[temp_klim];
+                 }
+               }
+             cv1 = bv1[temp_klim];
              cv2 = bv2[temp_klim];
-			 yv1 = xv1[temp_klim];
-			 yv2 = xv2[temp_klim];
-			 yv3 = xv3[temp_klim];
-			 csm1 = bsm1[temp_klim];
-			 csm2 = bsm2[temp_klim];
-			 ysm1 = xsm1[temp_klim];
-			 ysm2 = xsm2[temp_klim];
-			 ysm3 = xsm3[temp_klim];
-			 csp1 = bsp1[temp_klim];
-			 csp2 = bsp2[temp_klim];
-			 ysp1 = xsp1[temp_klim];
-			 ysp2 = xsp2[temp_klim];
-			 ysp3 = xsp3[temp_klim];
-			 csd1 = bsd1[temp_klim];
-			 zd = bzd1[temp_klim];
-			 cfm1 = bfm1[temp_klim];
-			 cfm2 = bfm2[temp_klim];
-			 cfm3 = bfm3[temp_klim];
-			 cfp1 = bfp1[temp_klim];
-			 cfp2 = bfp2[temp_klim];
-			 cfp3 = bfp3[temp_klim];
-		   case 4:
+             yv1 = xv1[temp_klim];
+             yv2 = xv2[temp_klim];
+             yv3 = xv3[temp_klim];
+             csm1 = bsm1[temp_klim];
+             csm2 = bsm2[temp_klim];
+             ysm1 = xsm1[temp_klim];
+             ysm2 = xsm2[temp_klim];
+             ysm3 = xsm3[temp_klim];
+             csp1 = bsp1[temp_klim];
+             csp2 = bsp2[temp_klim];
+             ysp1 = xsp1[temp_klim];
+             ysp2 = xsp2[temp_klim];
+             ysp3 = xsp3[temp_klim];
+             csd1 = bsd1[temp_klim];
+             zd = bzd1[temp_klim];
+             cfm1 = bfm1[temp_klim];
+             cfm2 = bfm2[temp_klim];
+             cfm3 = bfm3[temp_klim];
+             cfp1 = bfp1[temp_klim];
+             cfp2 = bfp2[temp_klim];
+             cfp3 = bfp3[temp_klim];
+           case 4:
              kdv = propv.mdvar;
-			 ws = kdv >= 20;
+             ws = kdv >= 20;
              if (ws)
-			   kdv -= 20;
-			 w1 = kdv >= 10;
-			 if (w1)
-			   kdv -= 10;
-			 if (kdv < 0 || kdv > 3)
-			   {
+               kdv -= 20;
+             w1 = kdv >= 10;
+             if (w1)
+               kdv -= 10;
+             if (kdv < 0 || kdv > 3)
+               {
                  kdv = 0;
                  prop.kwx = std::max(prop.kwx, 2);
-			   }
-		   case 3:
-		     q = std::log(0.133 * prop.wn);
-			 gm = cfm1 + cfm2 / (std::pow(cfm3 * q, 2.0) + 1.0);
-			 gp = cfp1 + cfp2 / (std::pow(cfp3 * q, 2.0) + 1.0);
-		   case 2:
-		     dexa = std::sqrt(18e6 * prop.he[0])
+               }
+           case 3:
+             q = std::log(0.133 * prop.wn);
+             gm = cfm1 + cfm2 / (std::pow(cfm3 * q, 2.0) + 1.0);
+             gp = cfp1 + cfp2 / (std::pow(cfp3 * q, 2.0) + 1.0);
+           case 2:
+             dexa = std::sqrt(18e6 * prop.he[0])
                   + std::sqrt(18e6 * prop.he[1])
                   + std::pow((575.7e12 / prop.wn), THIRD);
-		   case 1:
-		     if (prop.dist < dexa)
-			   de = 130e3 * prop.dist / dexa;
-			 else
-			   de = 130e3 + prop.dist - dexa;
-		}
+           case 1:
+             if (prop.dist < dexa)
+               de = 130e3 * prop.dist / dexa;
+             else
+               de = 130e3 + prop.dist - dexa;
+        }
         vmd = curve(cv1, cv2, yv1, yv2, yv3, de);
-		sgtm = gm * curve(csm1, csm2, ysm1, ysm2, ysm3, de);
-		sgtp = gp * curve(csp1, csp2, ysp1, ysp2, ysp3, de);
-		sgtd = sgtp * csd1;
-		tgtd = (sgtp - sgtd) * zd;
-		if (w1)
-		  sgl = 0.0;
-		else
-		  {
+        sgtm = gm * curve(csm1, csm2, ysm1, ysm2, ysm3, de);
+        sgtp = gp * curve(csp1, csp2, ysp1, ysp2, ysp3, de);
+        sgtd = sgtp * csd1;
+        tgtd = (sgtp - sgtd) * zd;
+        if (w1)
+          sgl = 0.0;
+        else
+          {
             q = (1.0 - 0.8 * std::exp(-prop.dist / 50e3)) * prop.dh * prop.wn;
-		    sgl = 10.0 * q / (q + 13.0);
-		  }
-		if (ws)
-		  vs0 = 0.0;
-		else
-		  vs0 = pow(5.0 + 3.0 * std::exp(-de / 100e3), 2.0);
-		propv.lvar = 0;
-	}
+            sgl = 10.0 * q / (q + 13.0);
+          }
+        if (ws)
+          vs0 = 0.0;
+        else
+          vs0 = pow(5.0 + 3.0 * std::exp(-de / 100e3), 2.0);
+        propv.lvar = 0;
+    }
   zt = zzt;
   zl = zzl;
   zc = zzc;
@@ -636,14 +636,14 @@ avar(double zzt, double zzl, double zzc,
     {
     case 0:
         zt = zc;
-	    zl = zc;
-	    break;
+        zl = zc;
+        break;
     case 1:
         zl = zc;
         break;
     case 2:
-	    zl = zt;
-	}
+        zl = zt;
+    }
   if (std::abs(zt) > 3.1 || std::abs(zl) > 3.1 || std::abs(zc) > 3.1)
     prop.kwx = std::max(prop.kwx, 1);
   if (zt < 0.0)
@@ -704,27 +704,27 @@ hzns(const std::vector<double> & pfl, prop_type & prop)
       sa = 0.0;
       sb = prop.dist;
       wq = true;
-	  for (int i = 1; i < np; ++i)
+      for (int i = 1; i < np; ++i)
         {
           sa += xi;
-		  sb -= xi;
-		  q = pfl[i+2] - (qc * sa + prop.the[0]) * sa - za;
-		  if (q > 0.0)
-		    {
+          sb -= xi;
+          q = pfl[i+2] - (qc * sa + prop.the[0]) * sa - za;
+          if (q > 0.0)
+            {
               prop.the[0] += q / sa;
-			  prop.dl[0] = sa;
-			  wq = false;
-		    }
-		  if (!wq)
-		    {
+              prop.dl[0] = sa;
+              wq = false;
+            }
+          if (!wq)
+            {
               q = pfl[i+2] - (qc * sb + prop.the[1]) * sb - zb;
-		      if (q > 0.0)
-			    {
+              if (q > 0.0)
+                {
                   prop.the[1] += q / sb;
                   prop.dl[1] = sb;
-			    }
-		    }
-	    }
+                }
+            }
+        }
     }
 }
 
@@ -743,7 +743,7 @@ z1sq1(const std::vector<double> & z,
     {
       xa = FORTRAN_DIM(xa, 1.0);
       xb = xn - FORTRAN_DIM(xn, xb + 1.0);
-	}
+    }
   ja = static_cast<int>(xa);
   jb = static_cast<int>(xb);
   n = jb - ja;
@@ -755,10 +755,10 @@ z1sq1(const std::vector<double> & z,
   for (int i = 2; i <= n; ++i)
     {
       ++ja;
-	  x += 1.0;
-	  a += z[ja+2];
-	  b += z[ja+2] * x;
-	}
+      x += 1.0;
+      a += z[ja+2];
+      b += z[ja+2] * x;
+    }
   a /= xa;
   b *= 12.0 / ((xa * xa + 2.0) * xa);
   z0 = a - b * xb;
@@ -787,14 +787,14 @@ qtile(int nn, double a[], int ir)
         }
       i = i0;
       while (i <= n && a[i] >= q)
-	    ++i;
+        ++i;
       if (i > n)
-	    i = n;
+        i = n;
       j = j1;
       while (j >= m && a[j] <= q)
-	    --j;
+        --j;
       if (j < m)
-	    j = m;
+        j = m;
       if (i < j)
         {
           r = a[i];
@@ -819,7 +819,7 @@ qtile(int nn, double a[], int ir)
           goto10 = true;
         }
       else
-	    done = true;
+        done = true;
     }
 
   return q;
@@ -841,7 +841,7 @@ qerf(double z)
     {
       t = rp / (t + rp);
       qerfv = std::exp(-0.5 * x * x) * rrt2pi * ((((b5 * t + b4) * t + b3) * t + b2) * t + b1) * t;
-	}
+    }
   if (x < 0.0)
     qerfv = 1.0 - qerfv;
   return qerfv;
@@ -878,16 +878,16 @@ d1thx(const std::vector<double> & pfl, double x1, double x2)
           xa -= 1.0;
           ++k;
         }
-	  s[j+2] = pfl[k+2] + (pfl[k+2] - pfl[k+1]) * xa;
-	  xa += xb;
-	}
+      s[j+2] = pfl[k+2] + (pfl[k+2] - pfl[k+1]) * xa;
+      xa += xb;
+    }
   z1sq1(s, 0.0, sn, xa, xb);
   xb = (xb - xa) / sn;
   for(j = 0; j < n; ++j)
     {
       s[j+2] -= xa;
       xa += xb;
-	}
+    }
   d1thxv = qtile(n - 1, s.data() + 2, ka - 1) - qtile(n - 1, s.data() + 2, kb - 1);
   d1thxv /= 1.0 - 0.8 * std::exp(-(x2 - x1) / 50.0e3);
 
@@ -913,36 +913,36 @@ qlrpfl(const std::vector<double> & pfl, int klimx, int mdvarx,
   if (prop.dl[0] + prop.dl[1] > 1.5 * prop.dist)
     {
       z1sq1(pfl, xl[0], xl[1], za, zb);
-	  prop.he[0] = prop.hg[0] + FORTRAN_DIM(pfl[2], za);
-	  prop.he[1] = prop.hg[1] + FORTRAN_DIM(pfl[np+2], zb);
+      prop.he[0] = prop.hg[0] + FORTRAN_DIM(pfl[2], za);
+      prop.he[1] = prop.hg[1] + FORTRAN_DIM(pfl[np+2], zb);
       for (j = 0; j < 2; ++j)
-	    prop.dl[j] = std::sqrt(2.0 * prop.he[j] / prop.gme)
-		           * std::exp(-0.07 * std::sqrt(prop.dh / std::max(prop.he[j], 5.0)));
+        prop.dl[j] = std::sqrt(2.0 * prop.he[j] / prop.gme)
+                   * std::exp(-0.07 * std::sqrt(prop.dh / std::max(prop.he[j], 5.0)));
       q = prop.dl[0] + prop.dl[1];
 
       if (q <= prop.dist)
-	    {
+        {
           q = std::pow(prop.dist / q, 2.0);
-		  for (j = 0; j < 2; ++j)
+          for (j = 0; j < 2; ++j)
             {
               prop.he[j] *= q;
-			  prop.dl[j] = std::sqrt(2.0 * prop.he[j] / prop.gme)
-		                 * std::exp(-0.07 * std::sqrt(prop.dh / std::max(prop.he[j], 5.0)));
-			}
-		}
-	  for(j = 0; j < 2; ++j)
-	    {
-          q = std::sqrt(2.0 * prop.he[j] / prop.gme);
-		  prop.the[j] = (0.65 * prop.dh * (q / prop.dl[j] - 1.0) - 2.0 * prop.he[j]) / q;
+              prop.dl[j] = std::sqrt(2.0 * prop.he[j] / prop.gme)
+                         * std::exp(-0.07 * std::sqrt(prop.dh / std::max(prop.he[j], 5.0)));
+            }
         }
-	}
+      for(j = 0; j < 2; ++j)
+        {
+          q = std::sqrt(2.0 * prop.he[j] / prop.gme);
+          prop.the[j] = (0.65 * prop.dh * (q / prop.dl[j] - 1.0) - 2.0 * prop.he[j]) / q;
+        }
+    }
   else
     {
       z1sq1(pfl, xl[0], 0.9 * prop.dl[0], za, q);
-	  z1sq1(pfl, prop.dist - 0.9 * prop.dl[1], xl[1], q, zb);
-	  prop.he[0] = prop.hg[0] + FORTRAN_DIM(pfl[2], za);
-	  prop.he[1] = prop.hg[1] + FORTRAN_DIM(pfl[np+2], zb);
-	}
+      z1sq1(pfl, prop.dist - 0.9 * prop.dl[1], xl[1], q, zb);
+      prop.he[0] = prop.hg[0] + FORTRAN_DIM(pfl[2], za);
+      prop.he[1] = prop.hg[1] + FORTRAN_DIM(pfl[np+2], zb);
+    }
   prop.mdp = -1;
   propv.lvar = std::max(propv.lvar, 3);
   if (mdvarx >= 0)
@@ -953,8 +953,8 @@ qlrpfl(const std::vector<double> & pfl, int klimx, int mdvarx,
   if (klimx > 0)
     {
       propv.klim = klimx;
-	  propv.lvar = 5;
-	}
+      propv.lvar = 5;
+    }
   lrprop(0.0, prop, propa);
 }
 
@@ -1011,11 +1011,11 @@ point_to_point(const std::vector<double> & elev, double tht_m, double rht_m,
   if (q <= 0.0)
   {
     ja = 3.0 + 0.1 * elev[0];
-	jb = np - ja + 6;
-	for (i = ja - 1; i < jb; ++i)
+    jb = np - ja + 6;
+    for (i = ja - 1; i < jb; ++i)
       zsys += elev[i];
     zsys /= (jb - ja + 1);
-	q = eno;
+    q = eno;
   }
   propv.mdvar = 12;
   qlrps(frq_mhz, zsys, q, pol, eps_dielect, sgm_conductivity, prop);
@@ -1097,11 +1097,11 @@ point_to_pointMDH(const std::vector<double> & elev, double tht_m, double rht_m,
   if (q <= 0.0)
   {
     ja = 3.0 + 0.1 * elev[0];
-	jb = np - ja + 6;
-	for (i = ja - 1; i < jb; ++i)
+    jb = np - ja + 6;
+    for (i = ja - 1; i < jb; ++i)
       zsys += elev[i];
     zsys /= (jb - ja + 1);
-	q = eno;
+    q = eno;
   }
   propv.mdvar = 12;
   qlrps(frq_mhz, zsys, q, pol, eps_dielect, sgm_conductivity, prop);
@@ -1113,7 +1113,7 @@ point_to_pointMDH(const std::vector<double> & elev, double tht_m, double rht_m,
     propmode = 0;  // Line-Of-Sight Mode
   else
     {
-	  if (int(q) == 0.0)
+      if (int(q) == 0.0)
         propmode = 4;  // Single Horizon
       else if (int(q) > 0.0)
         propmode = 8;  // Double Horizon
@@ -1175,11 +1175,11 @@ point_to_pointDH(const std::vector<double> & elev, double tht_m, double rht_m,
   if (q <= 0.0)
   {
     ja = 3.0 + 0.1 * elev[0];
-	jb = np - ja + 6;
-	for (i = ja - 1; i < jb; ++i)
+    jb = np - ja + 6;
+    for (i = ja - 1; i < jb; ++i)
       zsys += elev[i];
     zsys /= (jb - ja + 1);
-	q = eno;
+    q = eno;
   }
   propv.mdvar = 12;
   qlrps(frq_mhz, zsys, q, pol, eps_dielect, sgm_conductivity, prop);
@@ -1210,7 +1210,7 @@ point_to_pointDH(const std::vector<double> & elev, double tht_m, double rht_m,
 //
 // pol: 0-Horizontal, 1-Vertical
 // TSiteCriteria, RSiteCriteria:
-//		   0 - random, 1 - careful, 2 - very careful
+//           0 - random, 1 - careful, 2 - very careful
 // radio_climate: 1-Equatorial, 2-Continental Subtropical, 3-Maritime Tropical,
 //                4-Desert, 5-Continental Temperate, 6-Maritime Temperate, Over Land,
 //                7-Maritime Temperate, Over Sea
@@ -1273,7 +1273,7 @@ area(long ModVar, double deltaH, double tht_m, double rht_m,
   xlb = fs + avar(zt, zl, zc, prop, propv);
   dbloss = xlb;
   if (prop.kwx == 0)
-	errnum = 0;
+    errnum = 0;
   else
     errnum = prop.kwx;
 }
@@ -1286,16 +1286,16 @@ ITMAreadBLoss(long ModVar, double deltaH, double tht_m, double rht_m,
               double frq_mhz, int radio_climate, int pol, double pctTime, double pctLoc,
               double pctConf)
 {
-	char strmode[200];
-	int errnum;
-	double dbloss;
+    char strmode[200];
+    int errnum;
+    double dbloss;
 
-	area(ModVar, deltaH, tht_m, rht_m, dist_km, TSiteCriteria, RSiteCriteria, 
+    area(ModVar, deltaH, tht_m, rht_m, dist_km, TSiteCriteria, RSiteCriteria, 
          eps_dielect, sgm_conductivity, eno_ns_surfref,
-		 frq_mhz, radio_climate, pol, pctTime, pctLoc,
-		 pctConf, dbloss, strmode, errnum);
+         frq_mhz, radio_climate, pol, pctTime, pctLoc,
+         pctConf, dbloss, strmode, errnum);
 
-	return dbloss;
+    return dbloss;
 }
 
 ITM_EXPORT
