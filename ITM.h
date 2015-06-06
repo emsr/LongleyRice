@@ -13,6 +13,8 @@
 #  define ITM_LOCAL
 #endif
 
+#include <vector>
+
 struct ITM_EXPORT prop_type
 {
   double aref;
@@ -57,8 +59,8 @@ struct ITM_EXPORT propa_type
 
 ITM_EXPORT
 void
-qlrpfl(double pfl[], int klimx, int mdvarx,
-       prop_type &prop, propa_type &propa, propv_type &propv);
+qlrpfl(const std::vector<double> & elev, int klimx, int mdvarx,
+       prop_type & prop, propa_type & propa, propv_type & propv);
 
 ///
 /// pol: 0-Horizontal, 1-Vertical
@@ -78,10 +80,10 @@ qlrpfl(double pfl[], int klimx, int mdvarx,
 ///
 ITM_EXPORT
 void
-point_to_point(double elev[], double tht_m, double rht_m,
+point_to_point(const std::vector<double> & elev, double tht_m, double rht_m,
                double eps_dielect, double sgm_conductivity, double eno_ns_surfref,
                double frq_mhz, int radio_climate, int pol, double conf, double rel,
-               double &dbloss, char *strmode, int &errnum);
+               double & dbloss, char * strmode, int & errnum);
 
 ///
 /// pol: 0-Horizontal, 1-Vertical
@@ -108,10 +110,10 @@ point_to_point(double elev[], double tht_m, double rht_m,
 ///
 ITM_EXPORT
 void
-point_to_pointMDH(double elev[], double tht_m, double rht_m,
+point_to_pointMDH(const std::vector<double> & elev, double tht_m, double rht_m,
                   double eps_dielect, double sgm_conductivity, double eno_ns_surfref,
                   double frq_mhz, int radio_climate, int pol, double timepct, double locpct, double confpct, 
-                  double &dbloss, int &propmode, double &deltaH, int &errnum);
+                  double & dbloss, int & propmode, double & deltaH, int & errnum);
 
 /// pol: 0-Horizontal, 1-Vertical
 /// radio_climate: 1-Equatorial, 2-Continental Subtropical, 3-Maritime Tropical,
@@ -129,7 +131,7 @@ point_to_pointMDH(double elev[], double tht_m, double rht_m,
 ///                          Results are probably invalid.
 ITM_EXPORT
 void
-point_to_pointDH(double elev[], double tht_m, double rht_m,
+point_to_pointDH(const std::vector<double> & elev, double tht_m, double rht_m,
                  double eps_dielect, double sgm_conductivity, double eno_ns_surfref,
                  double frq_mhz, int radio_climate, int pol, double conf, double rel,
                  double &dbloss, double &deltaH, int &errnum);

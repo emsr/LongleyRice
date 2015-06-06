@@ -9,15 +9,15 @@
 int
 main()
 {
-  double * elevation;
+  std::vector<double> elevation;
   double tx_antenna_height, rx_antenna_height,
          permittivity, conductivity, refractivity,
          frequency;
   int    climate, polarization;
   double conf, rel;
   double dbloss;
-  char * strmode;
-  int    errnum;
+  char strmode[200] = "";
+  int errnum;
 
   // Read profile data.
   std::string filename;
@@ -47,6 +47,9 @@ main()
 
   std::cout << std::endl << "  Enter transmit frequency (>= " << 1.0 << ", <= " << 40000.0 << ") in MHz: ";
   std::cin >> frequency;
+
+  std::cout << std::endl << "  Enter confidence (>= " << 1.0 << ", <= " << 99.0 << ") %: ";
+  std::cin >> conf;
 
   char pol = '\0';
   std::cout << std::endl << "  Enter polarization (V|H): ";
