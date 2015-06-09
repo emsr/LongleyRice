@@ -13,8 +13,8 @@ main()
   double tx_antenna_height, rx_antenna_height,
          permittivity, conductivity, refractivity,
          frequency;
-  int    climate, polarization;
-  double conf, rel;
+  int climate, polarization;
+  double confidence, reliability;
   double dbloss;
   char strmode[200] = "";
   int errnum;
@@ -48,8 +48,11 @@ main()
   std::cout << std::endl << "  Enter transmit frequency (>= " << 1.0 << ", <= " << 40000.0 << ") in MHz: ";
   std::cin >> frequency;
 
-  std::cout << std::endl << "  Enter confidence (>= " << 1.0 << ", <= " << 99.0 << ") %: ";
-  std::cin >> conf;
+  std::cout << std::endl << "  Enter confidence (>= " << 0.01 << ", <= " << 0.99 << ") %: ";
+  std::cin >> confidence;
+
+  std::cout << std::endl << "  Enter reliability (>= " << 0.01 << ", <= " << 0.99 << ") %: ";
+  std::cin >> reliability;
 
   char pol = '\0';
   std::cout << std::endl << "  Enter polarization (V|H): ";
@@ -89,7 +92,7 @@ main()
 
   point_to_point(elevation, tx_antenna_height, rx_antenna_height,
                  permittivity, conductivity, refractivity,
-                 frequency, climate, polarization, conf, rel,
+                 frequency, climate, polarization, confidence, reliability,
                  dbloss, strmode, errnum);
 
   return 0;

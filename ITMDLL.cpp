@@ -9,17 +9,25 @@
 
 
 
-#include <math.h>
 #include <complex>
-#include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <string.h>
+#include <cstdio>
+#include <cmath>
+#include <cstdlib>
+#include <cassert>
+#include <cstring>
 #include <windows.h>
 
 #define THIRD  (1.0/3.0)
-#define DllExport  __declspec( dllexport )
+
+#if defined(_WIN32) || defined(_WIN64)
+#  define DllExport __declspec(dllexport)
+#else
+#  define DllExport [[visibility("default")]]
+#endif
+
+#ifndef _MSC_VER
+#  define _stdcall 
+#endif
 
 using namespace std;
 
@@ -141,7 +149,7 @@ double h0f(double r, double et)
   double q, x;
   int it;
   double h0fv;
-  it=(int)et;
+  it=static_cast<int>(et);
   if(it<=0)
     { it=1;
       q=0.0;
@@ -268,7 +276,9 @@ double  ascat( double d, prop_type &prop, propa_type &propa)
   return ascatv;
 }
 
-double DllExport _stdcall qerfi( double q )
+DllExport _stdcall
+double
+qerfi( double q )
 { double x, t, v;
   double c0  = 2.515516698;
   double c1  = 0.802853;
@@ -285,7 +295,9 @@ double DllExport _stdcall qerfi( double q )
   return v;
 }
 
-void DllExport _stdcall qlrps( double fmhz, double zsys, double en0,
+DllExport _stdcall
+void
+qlrps( double fmhz, double zsys, double en0,
           int ipol, double eps, double sgm, prop_type &prop)
 { double gma=157e-9;
   prop.wn=fmhz/47.7;
@@ -334,8 +346,9 @@ double  alos( double d, prop_type &prop, propa_type &propa)
   return alosv;
 }
 
-
-void DllExport _stdcall qlra( int kst[], int klimx, int mdvarx,
+DllExport _stdcall
+void
+qlra( int kst[], int klimx, int mdvarx,
           prop_type &prop, propv_type &propv)
 { complex<double> prop_zgnd(prop.zgndreal,prop.zgndimag);
   double q;
@@ -366,7 +379,9 @@ void DllExport _stdcall qlra( int kst[], int klimx, int mdvarx,
 	}
 }
 
-void DllExport _stdcall lrprop (double d,
+DllExport _stdcall
+void
+lrprop (double d,
           prop_type &prop, propa_type &propa)  // PaulM_lrprop
 { static bool wlos, wscat;
   static double dmin, xae;
@@ -515,7 +530,9 @@ double curve (double const &c1, double const &c2, double const &x1,
          (1.0+pow(de/x1,2.0));
 }
 
-double DllExport _stdcall avar(double zzt, double zzl, double zzc,
+DllExport _stdcall
+double
+avar(double zzt, double zzl, double zzc,
          prop_type &prop, propv_type &propv)
 { static int kdv;
   static double dexa, de, vmd, vs0, sgl, sgtm, sgtp, sgtd, tgtd,
@@ -676,7 +693,7 @@ void hzns (double pfl[], prop_type &prop)
   int np;
   double xi, za, zb, qc, q, sb, sa;
 
-  np=(int)pfl[0];
+  np=static_cast<int>(pfl[0]);
   xi=pfl[1];
   za=pfl[2]+prop.hg[0];
   zb=pfl[np+2]+prop.hg[1];
@@ -722,8 +739,8 @@ void z1sq1 (double z[], const double &x1, const double &x2,
     { xa=FORTRAN_DIM(xa,1.0);
 	  xb=xn-FORTRAN_DIM(xn,xb+1.0);
 	}
-  ja=(int)xa;
-  jb=(int)xb;
+  ja=static_cast<int>(xa);
+  jb=static_cast<int>(xb);
   n=jb-ja;
   xa=xb-xa;
   x=-0.5*xa;
@@ -814,13 +831,13 @@ double d1thx(double pfl[], const double &x1, const double &x2)
   double d1thxv, sn, xa, xb;
   double *s;
 
-  np=(int)pfl[0];
+  np=static_cast<int>(pfl[0]);
   xa=x1/pfl[1];
   xb=x2/pfl[1];
   d1thxv=0.0;
   if(xb-xa<2.0)  // exit out
     return d1thxv;
-  ka=(int)(0.1*(xb-xa+8.0));
+  ka=static_cast<int>(0.1*(xb-xa+8.0));
   ka=mymin(mymax(4,ka),25);
   n=10*ka-5;
   kb=n-ka+1;
@@ -829,8 +846,8 @@ double d1thx(double pfl[], const double &x1, const double &x2)
   s[0]=sn;
   s[1]=1.0;
   xb=(xb-xa)/sn;
-  k=(int)(xa+1.0);
-  xa-=(double)k;
+  k=static_cast<int>(xa+1.0);
+  xa-=static_cast<double>(k);
   for(j=0;j<n;j++)
     { while(xa>0.0 && k<np)
 	    { xa-=1.0;
@@ -851,13 +868,15 @@ double d1thx(double pfl[], const double &x1, const double &x2)
   return d1thxv;
 }
 
-void DllExport _stdcall qlrpfl( double pfl[], int klimx, int mdvarx,
+DllExport _stdcall
+void
+qlrpfl( double pfl[], int klimx, int mdvarx,
         prop_type &prop, propa_type &propa, propv_type &propv )
 { int np, j;
   double xl[2], q, za, zb;
 
   prop.dist=pfl[0]*pfl[1];
-  np=(int)pfl[0];
+  np=static_cast<int>(pfl[0]);
   hzns(pfl,prop);
   for(j=0;j<2;j++)
     xl[j]=mymin(15.0*prop.hg[j],0.1*prop.dl[j]);
@@ -914,7 +933,9 @@ double deg2rad(double d)
 //* Point-To-Point Mode Calculations                     *
 //********************************************************
 
-void DllExport _stdcall point_to_point(double elev[], double tht_m, double rht_m,
+DllExport _stdcall
+void
+point_to_point(double elev[], double tht_m, double rht_m,
           double eps_dielect, double sgm_conductivity, double eno_ns_surfref,
 		  double frq_mhz, int radio_climate, int pol, double conf, double rel,
 		  double &dbloss, char *strmode, int &errnum)
@@ -941,7 +962,6 @@ void DllExport _stdcall point_to_point(double elev[], double tht_m, double rht_m
   double zc, zr;
   double eno, enso, q;
   long ja, jb, i, np;
-  double dkm, xkm;
   double fs;
 
   prop.hg[0] = tht_m;   prop.hg[1] = rht_m;
@@ -951,9 +971,7 @@ void DllExport _stdcall point_to_point(double elev[], double tht_m, double rht_m
   prop.mdp = -1;
   zc = qerfi(conf);
   zr = qerfi(rel);
-  np = (long)elev[0];
-  dkm = (elev[1] * elev[0]) / 1000.0;
-  xkm = elev[1] / 1000.0;
+  np = static_cast<long>(elev[0]);
   eno = eno_ns_surfref;
   enso = 0.0;
   q = enso;
@@ -987,8 +1005,9 @@ void DllExport _stdcall point_to_point(double elev[], double tht_m, double rht_m
   errnum = prop.kwx;
 }
 
-
-void DllExport _stdcall point_to_pointMDH (double elev[], double tht_m, double rht_m,
+DllExport _stdcall
+void
+point_to_pointMDH (double elev[], double tht_m, double rht_m,
           double eps_dielect, double sgm_conductivity, double eno_ns_surfref,
 		  double frq_mhz, int radio_climate, int pol, double timepct, double locpct, double confpct, 
 		  double &dbloss, int &propmode, double &deltaH, int &errnum)
@@ -1022,7 +1041,6 @@ void DllExport _stdcall point_to_pointMDH (double elev[], double tht_m, double r
   double ztime, zloc, zconf;
   double eno, enso, q;
   long ja, jb, i, np;
-  double dkm, xkm;
   double fs;
 
   propmode = -1;  // mode is undefined
@@ -1035,9 +1053,7 @@ void DllExport _stdcall point_to_pointMDH (double elev[], double tht_m, double r
   zloc = qerfi(locpct);
   zconf = qerfi(confpct);
 
-  np = (long)elev[0];
-  dkm = (elev[1] * elev[0]) / 1000.0;
-  xkm = elev[1] / 1000.0;
+  np = static_cast<long>(elev[0]);
   eno = eno_ns_surfref;
   enso = 0.0;
   q = enso;
@@ -1072,7 +1088,9 @@ void DllExport _stdcall point_to_pointMDH (double elev[], double tht_m, double r
   errnum = prop.kwx;
 }
 
-void DllExport _stdcall point_to_pointDH (double elev[], double tht_m, double rht_m,
+DllExport _stdcall
+void
+point_to_pointDH (double elev[], double tht_m, double rht_m,
           double eps_dielect, double sgm_conductivity, double eno_ns_surfref,
 		  double frq_mhz, int radio_climate, int pol, double conf, double rel,
 		  double &dbloss, double &deltaH, int &errnum)
@@ -1100,7 +1118,6 @@ void DllExport _stdcall point_to_pointDH (double elev[], double tht_m, double rh
   double zc, zr;
   double eno, enso, q;
   long ja, jb, i, np;
-  double dkm, xkm;
   double fs;
 
   prop.hg[0] = tht_m;   prop.hg[1] = rht_m;
@@ -1110,9 +1127,7 @@ void DllExport _stdcall point_to_pointDH (double elev[], double tht_m, double rh
   prop.mdp = -1;
   zc = qerfi(conf);
   zr = qerfi(rel);
-  np = (long)elev[0];
-  dkm = (elev[1] * elev[0]) / 1000.0;
-  xkm = elev[1] / 1000.0;
+  np = static_cast<long>(elev[0]);
   eno = eno_ns_surfref;
   enso = 0.0;
   q = enso;
@@ -1151,12 +1166,13 @@ void DllExport _stdcall point_to_pointDH (double elev[], double tht_m, double rh
 //********************************************************
 //* Area Mode Calculations                               *
 //********************************************************
-
-void DllExport _stdcall area(long ModVar, double deltaH, double tht_m, double rht_m,
+DllExport _stdcall
+void
+area(long ModVar, double deltaH, double tht_m, double rht_m,
 		  double dist_km, int TSiteCriteria, int RSiteCriteria, 
           double eps_dielect, double sgm_conductivity, double eno_ns_surfref,
 		  double frq_mhz, int radio_climate, int pol, double pctTime, double pctLoc,
-		  double pctConf, double &dbloss, char *strmode, int &errnum)
+		  double pctConf, double &dbloss, char *, int &errnum)
 {
 	// pol: 0-Horizontal, 1-Vertical
 	// TSiteCriteria, RSiteCriteria:
@@ -1188,8 +1204,8 @@ void DllExport _stdcall area(long ModVar, double deltaH, double tht_m, double rh
   long ipol;
   int kst[2];
 
-  kst[0] = (int) TSiteCriteria;
-  kst[1] = (int) RSiteCriteria;
+  kst[0] = static_cast<int>(TSiteCriteria);
+  kst[1] = static_cast<int>(RSiteCriteria);
   zt = qerfi(pctTime);
   zl = qerfi(pctLoc);
   zc = qerfi(pctConf);
@@ -1198,11 +1214,11 @@ void DllExport _stdcall area(long ModVar, double deltaH, double tht_m, double rh
   eno = eno_ns_surfref;
   prop.dh = deltaH;
   prop.hg[0] = tht_m;  prop.hg[1] = rht_m;
-  propv.klim = (__int32) radio_climate;
+  propv.klim = static_cast<int32_t>(radio_climate);
   prop.ens = eno;
   prop.kwx = 0;
-  ivar = (long) ModVar;
-  ipol = (long) pol;
+  ivar = static_cast<long>(ModVar);
+  ipol = static_cast<long>(pol);
   qlrps(frq_mhz, 0.0, eno, ipol, eps, sgm, prop);
   qlra(kst, propv.klim, ivar, prop, propv);
   if(propv.lvar<1) propv.lvar = 1;
@@ -1216,8 +1232,9 @@ void DllExport _stdcall area(long ModVar, double deltaH, double tht_m, double rh
     errnum = prop.kwx;
 }
 
-
-double DllExport _stdcall ITMAreadBLoss(long ModVar, double deltaH, double tht_m, double rht_m,
+DllExport _stdcall
+double
+ITMAreadBLoss(long ModVar, double deltaH, double tht_m, double rht_m,
 		  double dist_km, int TSiteCriteria, int RSiteCriteria, 
           double eps_dielect, double sgm_conductivity, double eno_ns_surfref,
 		  double frq_mhz, int radio_climate, int pol, double pctTime, double pctLoc,
@@ -1233,7 +1250,9 @@ double DllExport _stdcall ITMAreadBLoss(long ModVar, double deltaH, double tht_m
 	return dbloss;
 }
 
-double  DllExport _stdcall ITMDLLVersion()
+DllExport _stdcall
+double
+ITMDLLVersion()
 {
 	return 7.0;
 }

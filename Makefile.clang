@@ -38,8 +38,9 @@ COPY = cp -f
 SED = sed
 CXX_DIR = /usr
 CXX_BIN_DIR = $(CXX_DIR)/bin
+CXX_STD = -std=c++14
 CXX_OPTS = -fdiagnostics-color=always
-CXX = $(CXX_BIN_DIR)/clang++ -std=c++14 $(CXX_OPTS)
+CXX = $(CXX_BIN_DIR)/clang++
 ifneq ("$(wildcard $(CXX_BIN_DIR)/ar)","")
   AR = "$(CXX_BIN_DIR)/ar"
 else
@@ -57,7 +58,7 @@ else
 endif
 OPT = -O3
 #OPT = -g
-CXXFLAGS = -Wall -Wextra -Wno-deprecated-declarations -Wold-style-cast $(OPT) -m$(ABI) -fPIC -c
+CXXFLAGS = $(CXX_STD) $(CXX_OPTS) -Wall -Wextra -Wno-deprecated-declarations -Wold-style-cast $(OPT) -m$(ABI) -fPIC -c
 OFLAGS = -Wall -Wextra $(OPT) -m$(ABI) -fPIC -Wl,-rpath,$(CXX_LIB_DIR)
 LIB_DL = -ldl
 #  These flags control library symbol visibility.
@@ -78,11 +79,13 @@ SRCS = \
 
 BIN_SRCS = \
   $(SRC_DIR)/RunITM.cpp \
-  $(SRC_DIR)/RunITMDLL.cpp
+  $(SRC_DIR)/RunITMDLL.cpp \
+  $(SRC_DIR)/TestITModel.cpp
 
 BINS = \
   $(BIN_DIR)/RunITM$(EXE_EXT) \
-  $(BIN_DIR)/RunITMDLL$(EXE_EXT)
+  $(BIN_DIR)/RunITMDLL$(EXE_EXT) \
+  $(BIN_DIR)/TestITModel$(EXE_EXT)
 
 
 all: $(OBJ_DIR) \
@@ -92,7 +95,7 @@ all: $(OBJ_DIR) \
 
 # new...
 
-new: $(OBJ_DIR) $(BIN_DIR)/RunITM$(EXE_EXT) $(LIB_DIR)/libITM$(DLL_EXT)
+new: $(OBJ_DIR) $(BIN_DIR)/RunITM$(EXE_EXT) $(BIN_DIR)/TestITModel$(EXE_EXT) $(LIB_DIR)/libITM$(DLL_EXT)
 
 $(OBJ_DIR)/ITM$(OBJ_EXT): ITM.h $(SRC_DIR)/ITM.cpp
 	$(CXX) $(CXXFLAGS) -o $(OBJ_DIR)/ITM$(OBJ_EXT) ITM.cpp
@@ -105,6 +108,12 @@ $(OBJ_DIR)/RunITM$(OBJ_EXT): $(SRC_DIR)/RunITM.cpp
 
 $(BIN_DIR)/RunITM$(EXE_EXT): $(OBJ_DIR)/RunITM$(OBJ_EXT) $(LIB_DIR)/libITM$(DLL_EXT)
 	$(CXX) $(OFLAGS) -o $(BIN_DIR)/RunITM$(EXE_EXT) $(OBJ_DIR)/RunITM$(OBJ_EXT) -L$(LIB_DIR) -lITM
+
+$(OBJ_DIR)/TestITModel$(OBJ_EXT): $(SRC_DIR)/TestITModel.cpp
+	$(CXX) $(CXXFLAGS) -o $(OBJ_DIR)/TestITModel$(OBJ_EXT) TestITModel.cpp
+
+$(BIN_DIR)/TestITModel$(EXE_EXT): $(OBJ_DIR)/TestITModel$(OBJ_EXT) $(LIB_DIR)/libITM$(DLL_EXT)
+	$(CXX) $(OFLAGS) -o $(BIN_DIR)/TestITModel$(EXE_EXT) $(OBJ_DIR)/TestITModel$(OBJ_EXT) -L$(LIB_DIR) -lITM
 
 
 # original...
