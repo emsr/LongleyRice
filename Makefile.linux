@@ -148,7 +148,7 @@ clean:
 tarball:
 	rm -rf $(TARBALL_DIR)
 	mkdir $(TARBALL_DIR)
-	$(COPY) TODO README .gitignore Doxyfile Makefile* $(INCS) $(SRCS) $(BIN_SRCS) *.dat *.in *.out $(TARBALL_DIR)
+	$(COPY) TODO README .gitignore Doxyfile Makefile* $(INCS) $(SRCS) $(BIN_SRCS) *.dat *.in $(TARBALL_DIR)
 	tar -cvf $(TARBALL_DIR).tar $(TARBALL_DIR)
 	bzip2 -f $(TARBALL_DIR).tar
 	rm -rf $(TARBALL_DIR)

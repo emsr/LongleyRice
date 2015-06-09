@@ -115,6 +115,7 @@ point_to_pointMDH(const std::vector<double> & elev, double tht_m, double rht_m,
                   double frq_mhz, int radio_climate, int pol, double timepct, double locpct, double confpct, 
                   double & dbloss, int & propmode, double & deltaH, int & errnum);
 
+///
 /// pol: 0-Horizontal, 1-Vertical
 /// radio_climate: 1-Equatorial, 2-Continental Subtropical, 3-Maritime Tropical,
 ///                4-Desert, 5-Continental Temperate, 6-Maritime Temperate, Over Land,
@@ -129,6 +130,7 @@ point_to_pointMDH(const std::vector<double> & elev, double tht_m, double rht_m,
 ///                     Results are probably invalid.
 ///         Other-  Warning: Some parameters are out of range.
 ///                          Results are probably invalid.
+///
 ITM_EXPORT
 void
 point_to_pointDH(const std::vector<double> & elev, double tht_m, double rht_m,
@@ -136,9 +138,10 @@ point_to_pointDH(const std::vector<double> & elev, double tht_m, double rht_m,
                  double frq_mhz, int radio_climate, int pol, double conf, double rel,
                  double &dbloss, double &deltaH, int &errnum);
 
+///
 /// pol: 0-Horizontal, 1-Vertical
 /// TSiteCriteria, RSiteCriteria:
-///		   0 - random, 1 - careful, 2 - very careful
+///           0 - random, 1 - careful, 2 - very careful
 /// radio_climate: 1-Equatorial, 2-Continental Subtropical, 3-Maritime Tropical,
 ///                4-Desert, 5-Continental Temperate, 6-Maritime Temperate, Over Land,
 ///                7-Maritime Temperate, Over Sea
@@ -156,6 +159,7 @@ point_to_pointDH(const std::vector<double> & elev, double tht_m, double rht_m,
 ///         Other-  Warning: Some parameters are out of range.
 ///                          Results are probably invalid.
 /// NOTE: strmode is not used at this time.
+///
 ITM_EXPORT
 void
 area(long ModVar, double deltaH, double tht_m, double rht_m,
