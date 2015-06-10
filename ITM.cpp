@@ -81,9 +81,7 @@ h0f(double r, double et)
   double a[5]{25.0, 80.0, 177.0, 395.0, 705.0};
   double b[5]{24.0, 45.0,  68.0,  80.0, 105.0};
   double q, x;
-  int it;
-  double h0fv;
-  it = static_cast<int>(et);
+  auto it = static_cast<int>(et);
   if (it <= 0)
     {
       it = 1;
@@ -97,7 +95,7 @@ h0f(double r, double et)
   else
     q = et - it;
   x = std::pow(1.0 / r, 2.0);
-  h0fv = 4.343 * std::log((a[it-1]*x+b[it-1])*x+1.0);
+  double h0fv = 4.343 * std::log((a[it - 1] * x + b[it - 1]) * x + 1.0);
   if (q != 0.0)
     h0fv = (1.0 - q) * h0fv + q * 4.343 * std::log((a[it] * x + b[it]) * x + 1.0);
   return h0fv;
@@ -635,14 +633,14 @@ avar(double zzt, double zzl, double zzc,
   switch (kdv)
     {
     case 0:
-        zt = zc;
-        zl = zc;
-        break;
+      zt = zc;
+      zl = zc;
+      break;
     case 1:
-        zl = zc;
-        break;
+      zl = zc;
+      break;
     case 2:
-        zl = zt;
+      zl = zt;
     }
   if (std::abs(zt) > 3.1 || std::abs(zl) > 3.1 || std::abs(zc) > 3.1)
     prop.kwx = std::max(prop.kwx, 1);
@@ -675,9 +673,9 @@ avar(double zzt, double zzl, double zzc,
     }
   avarv = prop.aref - vmd - yr - propv.sgc * zc;
   if (avarv < 0.0)
-    avarv = avarv * (29.0 - avarv) / (29.0 - 10.0 * avarv);
-  return avarv;
+    avarv *= (29.0 - avarv) / (29.0 - 10.0 * avarv);
 
+  return avarv;
 }
 
 
@@ -991,7 +989,6 @@ point_to_point(const std::vector<double> & elev, double tht_m, double rht_m,
   propv_type propv;
   propa_type propa;
   double zsys = 0;
-  double zc, zr;
   double eno, enso, q;
   long ja, jb, i, np;
   double fs;
@@ -1002,8 +999,8 @@ point_to_point(const std::vector<double> & elev, double tht_m, double rht_m,
   prop.kwx = 0;
   propv.lvar = 5;
   prop.mdp = -1;
-  zc = qerfi(conf);
-  zr = qerfi(rel);
+  auto zc = qerfi(conf);
+  auto zr = qerfi(rel);
   np = static_cast<long>(elev[0]);
   eno = eno_ns_surfref;
   enso = 0.0;

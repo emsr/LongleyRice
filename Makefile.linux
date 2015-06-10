@@ -78,14 +78,16 @@ SRCS = \
   $(SRC_DIR)/ITMDLL.cpp
 
 BIN_SRCS = \
-  $(SRC_DIR)/RunITM.cpp \
-  $(SRC_DIR)/RunITMDLL.cpp \
-  $(SRC_DIR)/TestITModel.cpp
+  $(SRC_DIR)/RunITModel.cpp \
+  $(SRC_DIR)/RunITModelOld.cpp \
+  $(SRC_DIR)/TestITModel.cpp \
+  $(SRC_DIR)/TestITModelOld.cpp
 
 BINS = \
-  $(BIN_DIR)/RunITM$(EXE_EXT) \
-  $(BIN_DIR)/RunITMDLL$(EXE_EXT) \
-  $(BIN_DIR)/TestITModel$(EXE_EXT)
+  $(BIN_DIR)/RunITModel$(EXE_EXT) \
+  $(BIN_DIR)/RunITModelOld$(EXE_EXT) \
+  $(BIN_DIR)/TestITModel$(EXE_EXT) \
+  $(BIN_DIR)/TestITModelOld$(EXE_EXT)
 
 
 all: $(OBJ_DIR) \
@@ -95,7 +97,7 @@ all: $(OBJ_DIR) \
 
 # new...
 
-new: $(OBJ_DIR) $(BIN_DIR)/RunITM$(EXE_EXT) $(BIN_DIR)/TestITModel$(EXE_EXT) $(LIB_DIR)/libITM$(DLL_EXT)
+new: $(OBJ_DIR) $(BIN_DIR)/RunITModel$(EXE_EXT) $(BIN_DIR)/TestITModel$(EXE_EXT) $(LIB_DIR)/libITM$(DLL_EXT)
 
 $(OBJ_DIR)/ITM$(OBJ_EXT): ITM.h $(SRC_DIR)/ITM.cpp
 	$(CXX) $(CXXFLAGS) -o $(OBJ_DIR)/ITM$(OBJ_EXT) ITM.cpp
@@ -103,11 +105,11 @@ $(OBJ_DIR)/ITM$(OBJ_EXT): ITM.h $(SRC_DIR)/ITM.cpp
 $(LIB_DIR)/libITM$(DLL_EXT): $(OBJ_DIR)/ITM$(OBJ_EXT)
 	$(CXX) $(OFLAGS) -shared -o $(LIB_DIR)/libITM$(DLL_EXT) $(OBJ_DIR)/ITM$(OBJ_EXT)
 
-$(OBJ_DIR)/RunITM$(OBJ_EXT): $(SRC_DIR)/RunITM.cpp
-	$(CXX) $(CXXFLAGS) -o $(OBJ_DIR)/RunITM$(OBJ_EXT) RunITM.cpp
+$(OBJ_DIR)/RunITModel$(OBJ_EXT): $(SRC_DIR)/RunITModel.cpp
+	$(CXX) $(CXXFLAGS) -o $(OBJ_DIR)/RunITModel$(OBJ_EXT) RunITModel.cpp
 
-$(BIN_DIR)/RunITM$(EXE_EXT): $(OBJ_DIR)/RunITM$(OBJ_EXT) $(LIB_DIR)/libITM$(DLL_EXT)
-	$(CXX) $(OFLAGS) -o $(BIN_DIR)/RunITM$(EXE_EXT) $(OBJ_DIR)/RunITM$(OBJ_EXT) -L$(LIB_DIR) -lITM
+$(BIN_DIR)/RunITModel$(EXE_EXT): $(OBJ_DIR)/RunITModel$(OBJ_EXT) $(LIB_DIR)/libITM$(DLL_EXT)
+	$(CXX) $(OFLAGS) -o $(BIN_DIR)/RunITModel$(EXE_EXT) $(OBJ_DIR)/RunITModel$(OBJ_EXT) -L$(LIB_DIR) -lITM
 
 $(OBJ_DIR)/TestITModel$(OBJ_EXT): $(SRC_DIR)/TestITModel.cpp
 	$(CXX) $(CXXFLAGS) -o $(OBJ_DIR)/TestITModel$(OBJ_EXT) TestITModel.cpp
@@ -118,7 +120,7 @@ $(BIN_DIR)/TestITModel$(EXE_EXT): $(OBJ_DIR)/TestITModel$(OBJ_EXT) $(LIB_DIR)/li
 
 # original...
 
-orig: $(OBJ_DIR) $(BIN_DIR)/RunITMDLL$(EXE_EXT) $(LIB_DIR)/libITMDLL$(DLL_EXT)
+orig: $(OBJ_DIR) $(BIN_DIR)/RunITModelOld$(EXE_EXT) $(LIB_DIR)/libITMDLL$(DLL_EXT) $(BIN_DIR)/TestITModelOld$(EXE_EXT)
 
 $(OBJ_DIR)/ITMDLL$(OBJ_EXT): $(SRC_DIR)/ITMDLL.cpp
 	$(CXX) $(CXXFLAGS) -o $(OBJ_DIR)/ITMDLL$(OBJ_EXT) $(SRC_DIR)/ITMDLL.cpp
@@ -126,17 +128,24 @@ $(OBJ_DIR)/ITMDLL$(OBJ_EXT): $(SRC_DIR)/ITMDLL.cpp
 $(LIB_DIR)/libITMDLL$(DLL_EXT): $(OBJ_DIR)/ITMDLL$(OBJ_EXT)
 	$(CXX) $(OFLAGS) -shared -o $(LIB_DIR)/libITMDLL$(DLL_EXT) $(OBJ_DIR)/ITMDLL$(OBJ_EXT)
 
-$(OBJ_DIR)/RunITMDLL$(OBJ_EXT): $(SRC_DIR)/RunITMDLL.cpp
-	$(CXX) $(CXXFLAGS) -o $(OBJ_DIR)/RunITMDLL$(OBJ_EXT) $(SRC_DIR)/RunITMDLL.cpp
+$(OBJ_DIR)/RunITModelOld$(OBJ_EXT): $(SRC_DIR)/RunITModelOld.cpp
+	$(CXX) $(CXXFLAGS) -o $(OBJ_DIR)/RunITModelOld$(OBJ_EXT) $(SRC_DIR)/RunITModelOld.cpp
 
-$(BIN_DIR)/RunITMDLL$(EXE_EXT): $(OBJ_DIR)/RunITMDLL$(OBJ_EXT) $(LIB_DIR)/libITMDLL$(DLL_EXT)
-	$(CXX) $(OFLAGS) -o $(BIN_DIR)/RunITMDLL$(EXE_EXT) $(OBJ_DIR)/RunITMDLL$(OBJ_EXT) -L$(LIB_DIR) -lITMDLL
+$(BIN_DIR)/RunITModelOld$(EXE_EXT): $(OBJ_DIR)/RunITModelOld$(OBJ_EXT) $(LIB_DIR)/libITMDLL$(DLL_EXT)
+	$(CXX) $(OFLAGS) -o $(BIN_DIR)/RunITModelOld$(EXE_EXT) $(OBJ_DIR)/RunITModelOld$(OBJ_EXT) -L$(LIB_DIR) -lITMDLL
+
+$(OBJ_DIR)/TestITModelOld$(OBJ_EXT): $(SRC_DIR)/TestITModelOld.cpp
+	$(CXX) $(CXXFLAGS) -o $(OBJ_DIR)/TestITModelOld$(OBJ_EXT) TestITModelOld.cpp
+
+$(BIN_DIR)/TestITModelOld$(EXE_EXT): $(OBJ_DIR)/TestITModelOld$(OBJ_EXT) $(LIB_DIR)/libITMDLL$(DLL_EXT)
+	$(CXX) $(OFLAGS) -o $(BIN_DIR)/TestITModelOld$(EXE_EXT) $(OBJ_DIR)/TestITModelOld$(OBJ_EXT) -L$(LIB_DIR) -lITMDLL
 
 
 check:
-	LD_LIBRARY_PATH=$(LIB_DIR):$(CXX_LIB_DIR):$$LD_LIBRARY_PATH $(BIN_DIR)/RunITMDLL$(EXE_EXT) < itm_1.in > $(BIN_DIR)/itm_1.out
-	LD_LIBRARY_PATH=$(LIB_DIR):$(CXX_LIB_DIR):$$LD_LIBRARY_PATH $(BIN_DIR)/RunITM$(EXE_EXT) < itm_1.in > $(BIN_DIR)/itm_1.out
+	LD_LIBRARY_PATH=$(LIB_DIR):$(CXX_LIB_DIR):$$LD_LIBRARY_PATH $(BIN_DIR)/RunITModel$(EXE_EXT) < itm_1.in > $(BIN_DIR)/itm_1.out
+	LD_LIBRARY_PATH=$(LIB_DIR):$(CXX_LIB_DIR):$$LD_LIBRARY_PATH $(BIN_DIR)/RunITModelOld$(EXE_EXT) < itm_1.in > $(BIN_DIR)/itm_1.out
 	LD_LIBRARY_PATH=$(LIB_DIR):$(CXX_LIB_DIR):$$LD_LIBRARY_PATH $(BIN_DIR)/TestITModel$(EXE_EXT) > $(BIN_DIR)/TestITModel.out
+	LD_LIBRARY_PATH=$(LIB_DIR):$(CXX_LIB_DIR):$$LD_LIBRARY_PATH $(BIN_DIR)/TestITModelOld$(EXE_EXT) > $(BIN_DIR)/TestITModelOld.out
 	dos2unix $(BIN_DIR)/*.out
 
 
@@ -148,7 +157,7 @@ clean:
 tarball:
 	rm -rf $(TARBALL_DIR)
 	mkdir $(TARBALL_DIR)
-	$(COPY) TODO README .gitignore Doxyfile Makefile* $(INCS) $(SRCS) $(BIN_SRCS) *.dat *.in $(TARBALL_DIR)
+	$(COPY) TODO README .gitignore Doxyfile Makefile* $(INCS) $(SRCS) $(BIN_SRCS) *.dat *.in *.out $(TARBALL_DIR)
 	tar -cvf $(TARBALL_DIR).tar $(TARBALL_DIR)
 	bzip2 -f $(TARBALL_DIR).tar
 	rm -rf $(TARBALL_DIR)

@@ -23,18 +23,18 @@
  *  Answers are checked against stored values.
  */
 
-void WriteProfile(std::string filename, const std::vector<double> & elevation);
+void WriteProfile(const std::string & filename, const std::vector<double> & elevation);
 
-void TestTirem();
+void TestITM();
 
 int
 main()
 {
-    TestTirem();
+    TestITM();
 }
 
 void
-TestTirem()
+TestITM()
 {
 
     enum Status
@@ -121,6 +121,8 @@ TestTirem()
         0.0,   0.0,   0.0,   0.0,   0.0
     };
 
+    WriteProfile("Profile.txt", std::vector<double>{elev, elev + 250});
+
     std::cout.precision( 7 );
     std::cout.flags( std::cout.flags() | std::ios::showpoint );
 
@@ -148,115 +150,115 @@ TestTirem()
     {
         if ( i == 1 )
         {
-           num_profile_points  =  185;
-           offset =  60;
+            num_profile_points  =  185;
+            offset =  60;
         }
         else if ( i == 2 )
         {
-           tx_antenna_height = 1000.0;
+            tx_antenna_height = 1000.0;
         }
         else if ( i == 3 )
         {
-           tx_antenna_height = 10000.0;
+            tx_antenna_height = 10000.0;
         }
         else if ( i == 4 )
         {
-           tx_antenna_height =  10.0;
-           num_profile_points  =  140;
-           offset =  80;
+            tx_antenna_height =  10.0;
+            num_profile_points  =  140;
+            offset =  80;
         }
         else if ( i == 6 )
         {
-           rx_antenna_height = 100.0;
+            rx_antenna_height = 100.0;
         }
         else if ( i == 7 )
         {
-           rx_antenna_height = 1000.0;
+            rx_antenna_height = 1000.0;
         }
         else if ( i == 8 )
         {
-           rx_antenna_height = 10.0;
-           frequency = 10.0;
+            rx_antenna_height = 10.0;
+            frequency = 10.0;
         }
         else if ( i == 9 )
         {
-           frequency = 1000.0;
+            frequency = 1000.0;
         }
         else if ( i == 10 )
         {
-           frequency = 15000.0;
+            frequency = 15000.0;
         }
         else if ( i == 11 )
         {
-           frequency = 100.0;
-           refractivity = 201.0;
+            frequency = 100.0;
+            refractivity = 201.0;
         }
         else if ( i == 12 )
         {
-           refractivity = 400.0;
+            refractivity = 400.0;
         }
         else if ( i == 13 )
         {
-           refractivity = 301.0;
-           polarization = 0;
+            refractivity = 301.0;
+            polarization = 0;
         }
         else if ( i == 14 )
         {
-           polarization = 1;
+            polarization = 1;
         }
         else if ( i == 15 )
         {
-           frequency = 15000.0;
+            frequency = 15000.0;
         }
         else if ( i == 16 )
         {
-           frequency = 100.0;
-           num_profile_points  = 50;
-           offset = 160;
-           conductivity = 0.01;
-           permittivity = 8.0;
+            frequency = 100.0;
+            num_profile_points  = 50;
+            offset = 160;
+            conductivity = 0.01;
+            permittivity = 8.0;
         }
         else if ( i == 17 )
         {
-           conductivity = 0.5;
-           permittivity = 40.0;
+            conductivity = 0.5;
+            permittivity = 40.0;
         }
         else if ( i == 18 )
         {
-           conductivity = 0.028;
-           permittivity = 15.0;
-           num_profile_points  = 10;
-           offset = 60;
+            conductivity = 0.028;
+            permittivity = 15.0;
+            num_profile_points  = 10;
+            offset = 60;
         }
         else if ( i == 19 )
         {
-           tx_antenna_height = 0.1;
-           rx_antenna_height = 0.1;
+            tx_antenna_height = 0.1;
+            rx_antenna_height = 0.1;
         }
         else if ( i == 20 )
         {
-           offset = 190;
-           tx_antenna_height = 10.0;
-           rx_antenna_height = 10.0;
+            offset = 190;
+            tx_antenna_height = 10.0;
+            rx_antenna_height = 10.0;
         }
         else if ( i == 21 )
         {
-           num_profile_points  = 168;
-           offset = 70;
-           tx_antenna_height = 1.0;
-           rx_antenna_height = 1.0;
+            num_profile_points  = 168;
+            offset = 70;
+            tx_antenna_height = 1.0;
+            rx_antenna_height = 1.0;
         }
         else if ( i == 22 )
         {
-           tx_antenna_height = 2000.0;
-           rx_antenna_height = 2000.0;
+            tx_antenna_height = 2000.0;
+            rx_antenna_height = 2000.0;
         }
         else if ( i == 23 )
         {
-           num_profile_points  = 78;
-           offset = 0;
-           tx_antenna_height = 2.0;
-           rx_antenna_height = 2.0;
+            num_profile_points  = 78;
+            offset = 0;
+            tx_antenna_height = 2.0;
+            rx_antenna_height = 2.0;
         }
 
         std::cout << "  ***  RUN # " << std::setw(2) << i << " ***" << std::endl;
@@ -273,7 +275,7 @@ TestTirem()
         std::vector<double> elevation(1 + 1 + num_profile_points);
 		elevation[0] = static_cast<double>(num_profile_points);
 		elevation[1] = dstinc;
-		std::copy(elev + offset, elev + num_profile_points, elevation.begin() + 2);
+		std::copy(elev + offset, elev + offset + num_profile_points, elevation.begin() + 2);
 
         // Write debugging profile.
         //if (i == 18)
@@ -292,7 +294,7 @@ TestTirem()
         std::cout << " INPUT:  TX HT  = " << std::setw(15) << tx_antenna_height << " (M) " << std::endl;
         std::cout << "         RX HT  = " << std::setw(15) << rx_antenna_height << " (M) " << std::endl;
         std::cout << "         FREQ   = " << std::setw(15) << frequency << " (MHZ) " << std::endl;
-        std::cout << "         POINTS = " << std::setw(12) << static_cast<int>(elevation[0]) << std::endl;
+        std::cout << "         POINTS = " << std::setw(12) << static_cast<long>(elevation[0]) << std::endl;
         std::cout << "         PTHLEN = " << std::setw(15) << elevation[0] * elevation[1] << " (M) " << std::endl;
         std::cout << "         REFRAC = " << std::setw(15) << refractivity << " (N) " << std::endl;
         std::cout << "         CONDUC = " << std::setw(15) << conductivity << " (S/M) " << std::endl;
@@ -359,7 +361,7 @@ TestTirem()
 
 //  Write terrain profile to a file for debugging.
 void
-WriteProfile(std::string filename,
+WriteProfile(const std::string & filename,
              const std::vector<double> & elevation)
 {
     std::ofstream bug(filename);

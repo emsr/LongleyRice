@@ -5,21 +5,6 @@
 #include <vector>
 
 
-// pol: 0-Horizontal, 1-Vertical
-// radio_climate: 1-Equatorial, 2-Continental Subtropical, 3-Maritime Tropical,
-//                4-Desert, 5-Continental Temperate, 6-Maritime Temperate, Over Land,
-//                7-Maritime Temperate, Over Sea
-// conf, rel: .01 to .99
-// elev[]: [num points - 1], [delta dist(meters)], [height(meters) point 1], ..., [height(meters) point n]
-// errnum: 0- No Error.
-//         1- Warning: Some parameters are nearly out of range.
-//                     Results should be used with caution.
-//         2- Note: Default parameters have been substituted for impossible ones.
-//         3- Warning: A combination of parameters is out of range.
-//                     Results are probably invalid.
-//         Other-  Warning: Some parameters are out of range.
-//                          Results are probably invalid.
-
 #if defined(_WIN32) || defined(_WIN64)
 #  define DllExport __declspec(dllexport)
 #else
@@ -36,12 +21,18 @@ point_to_point(double elev[], double tht_m, double rht_m,
                double eps_dielect, double sgm_conductivity, double eno_ns_surfref,
                double frq_mhz, int radio_climate, int pol, double conf, double rel,
                double & dbloss, char * strmode, int & errnum);
+			   
+DllExport _stdcall
+double
+ITMDLLVersion();
+
+void ReadProfile(const std::string & filename, std::vector<double> & elevation);
 
 
 int
 main()
 {
-  std::vector<double> elev;
+  std::vector<double> elevation;
   double tht_m, rht_m,
          eps_dielect, sgm_conductivity, eno_ns_surfref,
          frq_mhz;
@@ -59,17 +50,9 @@ main()
 #else
   std::cin >> filename;
 #endif
-  std::ifstream profile_in(filename);
-  if ( profile_in.fail() )
-  {
-#if defined(__cpp_lib_quoted_string_io)
-    std::cerr << "\n  Error: Unable to open profile data file " << std::quoted(filename) << "for reading.\n";
-#else
-    std::cerr << "\n  Error: Unable to open profile data file " << filename << "for reading.\n";
-#endif
-    return 1;
-  }
-
+  ReadProfile(filename, elevation);
+  if (elevation.size() < 5)
+    std::cerr << "\n  Error reading profile data file \"" << filename << "\".\n";
 
   std::cout << std::endl << "  Enter transmit antenna height (>= " << 0.0 << ", <= " << 30000.0 << ") in meters: ";
   std::cin >> tht_m;
@@ -122,11 +105,41 @@ main()
   std::cout << "  Enter Climate: ";
   std::cin >> radio_climate;
 
-  point_to_point(elev.data(), tht_m, rht_m,
+  point_to_point(elevation.data(), tht_m, rht_m,
                  eps_dielect, sgm_conductivity, eno_ns_surfref,
                  frq_mhz, radio_climate, pol, conf, rel,
                  dbloss, strmode, errnum);
 
   return 0;
+}
+
+
+//  Read a terrain profile.
+void
+ReadProfile(const std::string & filename,
+            std::vector<double> & elevation)
+{
+    elevation.clear();
+
+    std::ifstream dat(filename);
+    if (dat.fail())
+        return;
+
+    double num_points = 0.0;
+    dat >> num_points;
+    if (num_points <= 0.0)
+        return;
+
+    double delta_dist = 0.0;
+    dat >> delta_dist;
+    if (delta_dist <= 0.0)
+        return;
+
+    elevation.resize(1 + 1 + static_cast<long>(num_points));
+    elevation[0] = num_points;
+    elevation[1] = delta_dist;
+
+    for (long i = 0; i < static_cast<long>(num_points); ++i)
+        dat >> elevation[2 + i];
 }
 

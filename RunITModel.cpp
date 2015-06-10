@@ -5,6 +5,7 @@
 
 #include "ITM.h"
 
+void ReadProfile(const std::string & filename, std::vector<double> & elevation);
 
 int
 main()
@@ -27,17 +28,9 @@ main()
 #else
   std::cin >> filename;
 #endif
-  std::ifstream profile_in(filename);
-  if ( profile_in.fail() )
-  {
-#if defined(__cpp_lib_quoted_string_io)
-    std::cerr << "\n  Error: Unable to open profile data file " << std::quoted(filename) << "for reading.\n";
-#else
-    std::cerr << "\n  Error: Unable to open profile data file " << filename << "for reading.\n";
-#endif
-    return 1;
-  }
-
+  ReadProfile(filename, elevation);
+  if (elevation.size() < 5)
+    std::cerr << "\n  Error reading profile data file \"" << filename << "\".\n";
 
   std::cout << std::endl << "  Enter transmit antenna height (>= " << 0.0 << ", <= " << 30000.0 << ") in meters: ";
   std::cin >> tx_antenna_height;
@@ -98,3 +91,32 @@ main()
   return 0;
 }
 
+
+//  Read a terrain profile.
+void
+ReadProfile(const std::string & filename,
+            std::vector<double> & elevation)
+{
+    elevation.clear();
+
+    std::ifstream dat(filename);
+    if (dat.fail())
+        return;
+
+    double num_points = 0.0;
+    dat >> num_points;
+    if (num_points <= 0.0)
+        return;
+
+    double delta_dist = 0.0;
+    dat >> delta_dist;
+    if (delta_dist <= 0.0)
+        return;
+
+    elevation.resize(1 + 1 + static_cast<long>(num_points));
+    elevation[0] = num_points;
+    elevation[1] = delta_dist;
+
+    for (long i = 0; i < static_cast<long>(num_points); ++i)
+        dat >> elevation[2 + i];
+}
