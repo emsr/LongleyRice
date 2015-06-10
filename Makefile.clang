@@ -143,7 +143,7 @@ $(BIN_DIR)/TestITModelOld$(EXE_EXT): $(OBJ_DIR)/TestITModelOld$(OBJ_EXT) $(LIB_D
 
 check:
 	LD_LIBRARY_PATH=$(LIB_DIR):$(CXX_LIB_DIR):$$LD_LIBRARY_PATH $(BIN_DIR)/RunITModel$(EXE_EXT) < itm_1.in > $(BIN_DIR)/itm_1.out
-	LD_LIBRARY_PATH=$(LIB_DIR):$(CXX_LIB_DIR):$$LD_LIBRARY_PATH $(BIN_DIR)/RunITModelOld$(EXE_EXT) < itm_1.in > $(BIN_DIR)/itm_1.out
+	LD_LIBRARY_PATH=$(LIB_DIR):$(CXX_LIB_DIR):$$LD_LIBRARY_PATH $(BIN_DIR)/RunITModelOld$(EXE_EXT) < itm_1.in > $(BIN_DIR)/itm_old_1.out
 	LD_LIBRARY_PATH=$(LIB_DIR):$(CXX_LIB_DIR):$$LD_LIBRARY_PATH $(BIN_DIR)/TestITModel$(EXE_EXT) > $(BIN_DIR)/TestITModel.out
 	LD_LIBRARY_PATH=$(LIB_DIR):$(CXX_LIB_DIR):$$LD_LIBRARY_PATH $(BIN_DIR)/TestITModelOld$(EXE_EXT) > $(BIN_DIR)/TestITModelOld.out
 	dos2unix $(BIN_DIR)/*.out

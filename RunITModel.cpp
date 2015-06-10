@@ -88,6 +88,11 @@ main()
                  frequency, climate, polarization, confidence, reliability,
                  dbloss, strmode, errnum);
 
+  std::cout << "\n  ITM Output\n";
+  std::cout << "  Loss : " << dbloss << " dB\n";
+  std::cout << "  Mode : " << strmode << '\n';
+  std::cout << "  Error: " << errnum << '\n';
+
   return 0;
 }
 
