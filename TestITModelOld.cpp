@@ -323,6 +323,7 @@ TestITM()
         std::cout << "         MODE   = " << strmode << std::endl;
         std::cout << "         LOSS   = " << std::setw(15) << dbloss << " (DB) " << std::endl;
         std::cout << "         FSPLSS = " << std::setw(15) << fsplss << " (DB) " << std::endl;
+        std::cout << "         ERROR  = " << errnum << std::endl;
         std::cout << std::endl;
         std::cout << std::endl;
 
