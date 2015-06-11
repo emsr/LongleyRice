@@ -146,7 +146,7 @@ check:
 	LD_LIBRARY_PATH=$(LIB_DIR):$(CXX_LIB_DIR):$$LD_LIBRARY_PATH $(BIN_DIR)/RunITModelOld$(EXE_EXT) < itm_1.in > $(BIN_DIR)/itm_old_1.out
 	LD_LIBRARY_PATH=$(LIB_DIR):$(CXX_LIB_DIR):$$LD_LIBRARY_PATH $(BIN_DIR)/TestITModel$(EXE_EXT) > $(BIN_DIR)/TestITModel.out
 	LD_LIBRARY_PATH=$(LIB_DIR):$(CXX_LIB_DIR):$$LD_LIBRARY_PATH $(BIN_DIR)/TestITModelOld$(EXE_EXT) > $(BIN_DIR)/TestITModelOld.out
-	dos2unix $(BIN_DIR)/*.out
+	dos2unix Profile.txt $(BIN_DIR)/*.out
 
 
 clean:
