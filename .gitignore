@@ -9,6 +9,16 @@
 *.a
 *.lib
 
+itm32/RunITModel
+itm32/RunITModelOld
+itm32/TestITModel
+itm32/TestITModelOld
+
+itm64/RunITModel
+itm64/RunITModelOld
+itm64/TestITModel
+itm64/TestITModelOld
+
 itm_cpp.tar.bz2
 
 itm32/obj
