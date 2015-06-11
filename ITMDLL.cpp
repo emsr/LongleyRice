@@ -15,11 +15,11 @@
 #include <cstdlib>
 #include <cassert>
 #include <cstring>
-#include <windows.h>
 
 #define THIRD  (1.0/3.0)
 
 #if defined(_WIN32) || defined(_WIN64)
+#  include <windows.h>
 #  define DllExport __declspec(dllexport)
 #else
 #  define DllExport [[visibility("default")]]
