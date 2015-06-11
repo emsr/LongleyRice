@@ -22,7 +22,7 @@
 #  include <windows.h>
 #  define DllExport __declspec(dllexport)
 #else
-#  define DllExport [[visibility("default")]]
+#  define DllExport [[gnu::visibility("default")]]
 #endif
 
 #ifndef _MSC_VER

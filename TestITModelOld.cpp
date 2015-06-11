@@ -17,7 +17,7 @@
 #if defined(_WIN32) || defined(_WIN64)
 #  define DllExport __declspec(dllexport)
 #else
-#  define DllExport [[visibility("default")]]
+#  define DllExport [[gnu::visibility("default")]]
 #endif
 
 #ifndef _MSC_VER
