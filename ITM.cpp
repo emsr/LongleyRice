@@ -53,7 +53,7 @@ fht(double x, double pk)
   if (x < 200.0)
     {
       w = -std::log(pk);
-      if (pk < 1e-5 || x * std::pow(w, 3.0) > 5495.0)
+      if (pk < 1.0e-5 || x * std::pow(w, 3.0) > 5495.0)
         {
           fhtv = -117.0;
           if (x > 1.0)
@@ -109,9 +109,9 @@ ahd(double td)
   double a[3] = {   133.4,    104.6,     71.8};
   double b[3] = {0.332e-3, 0.212e-3, 0.157e-3};
   double c[3] = {  -4.343,   -1.086,    2.171};
-  if (td <= 10e3)
+  if (td <= 10.0e3)
     i = 0;
-  else if (td <= 70e3)
+  else if (td <= 70.0e3)
     i = 1;
   else
     i = 2;
@@ -133,7 +133,7 @@ adiff(double d, prop_type & prop, propa_type & propa)
         q += 10.0;
       wd1 = std::sqrt(1.0 + qk / q);
       xd1 = propa.dla + propa.tha / prop.gme;
-      q = (1.0-0.8*std::exp(-propa.dlsa/50e3))*prop.dh;
+      q = (1.0-0.8*std::exp(-propa.dlsa/50.0e3))*prop.dh;
       q *= 0.78 * std::exp(-std::pow(q / 16.0, 0.25));
       afo = std::min(15.0, 2.171 * std::log(1.0 + 4.77e-4 * prop.hg[0] * prop.hg[1] * prop.wn * q));
       qk = 1.0 / std::abs(prop_zgnd);
@@ -161,7 +161,7 @@ adiff(double d, prop_type & prop, propa_type & propa)
       pk = qk / wa;
       q = (1.607 - pk) * 151.0 * wa * th + xht;
       ar = 0.05751 * q - 4.343 * std::log(q) - aht;
-      q = (wd1 + xd1 / d) * std::min(((1.0 - 0.8 * std::exp(-d / 50e3)) * prop.dh * prop.wn), 6283.2);
+      q = (wd1 + xd1 / d) * std::min(((1.0 - 0.8 * std::exp(-d / 50.0e3)) * prop.dh * prop.wn), 6283.2);
       wd = 25.1 / (25.1 + std::sqrt(q));
       adiffv = ar * wd + (1.0 - wd) * adiffv + afo;
     }
@@ -220,7 +220,7 @@ ascat(double d, prop_type & prop, propa_type & propa)
       h0s = h0;
       th = propa.tha + d * prop.gme;
       ascatv = ahd(th * d) + 4.343 * std::log(47.7 * prop.wn * pow(th, 4.0))
-             - 0.1 * (prop.ens - 301.0) * std::exp(-th * d / 40e3) + h0;
+             - 0.1 * (prop.ens - 301.0) * std::exp(-th * d / 40.0e3) + h0;
     }
   return ascatv;
 }
@@ -253,7 +253,7 @@ void
 qlrps(double fmhz, double zsys, double en0,
       int ipol, double eps, double sgm, prop_type &prop)
 {
-  double gma = 157e-9;
+  double gma = 157.0e-9;
   prop.wn = fmhz / 47.7;
   prop.ens = en0;
   if (zsys != 0.0)
@@ -285,12 +285,12 @@ alos(double d, prop_type & prop, propa_type & propa)
   double alosv;
   if (d == 0.0)
     {
-      wls = 0.021 / (0.021 + prop.wn * prop.dh / std::max(10e3, propa.dlsa));
+      wls = 0.021 / (0.021 + prop.wn * prop.dh / std::max(10.0e3, propa.dlsa));
       alosv = 0.0;
     }
   else
     {
-      q = (1.0 - 0.8 * std::exp(-d / 50e3)) * prop.dh;
+      q = (1.0 - 0.8 * std::exp(-d / 50.0e3)) * prop.dh;
       s = 0.78 * q * std::exp(-std::pow(q / 16.0, 0.25));
       q = prop.he[0] + prop.he[1];
       sps = q / std::sqrt(d * d + q * q);
@@ -328,7 +328,7 @@ qlra(int kst[], int klimx, int mdvarx,
           if (prop.hg[j] < 5.0)
             q *= std::sin(0.3141593*prop.hg[j]);
           prop.he[j] = prop.hg[j]
-                     + (1.0 + q) * std::exp(-std::min(20.0, 2.0 * prop.hg[j] / std::max(1e-3, prop.dh)));
+                     + (1.0 + q) * std::exp(-std::min(20.0, 2.0 * prop.hg[j] / std::max(1.0e-3, prop.dh)));
         }
       q = std::sqrt(2.0 * prop.he[j] / prop.gme);
       prop.dl[j] = q * std::exp(-0.07 * std::sqrt(prop.dh / std::max(prop.he[j], 5.0)));
@@ -378,19 +378,19 @@ lrprop(double d,
         if (prop.hg[j] < 1.0 || prop.hg[j] > 1000.0)
           prop.kwx = std::max(prop.kwx, 1);
       for (j = 0; j < 2; ++j)
-        if (std::abs(prop.the[j]) > 200e-3
+        if (std::abs(prop.the[j]) > 200.0e-3
          || prop.dl[j] < 0.1 * propa.dls[j]
          || prop.dl[j] > 3.0 * propa.dls[j])
         prop.kwx = std::max(prop.kwx, 3);
       if (prop.ens < 250.0 || prop.ens > 400.0
-       || prop.gme < 75e-9 || prop.gme > 250e-9
+       || prop.gme < 75.0e-9 || prop.gme > 250.0e-9
        || prop_zgnd.real() <= std::abs(prop_zgnd.imag())
        || prop.wn  < 0.419 || prop.wn  > 420.0 )
         prop.kwx = 4;
       for (j = 0; j < 2; ++j)
         if (prop.hg[j] < 0.5 || prop.hg[j] > 3000.0)
           prop.kwx = 4;
-      dmin = std::abs(prop.he[0] - prop.he[1]) / 200e-3;
+      dmin = std::abs(prop.he[0] - prop.he[1]) / 200.0e-3;
       q = adiff(0.0, prop, propa);
       xae = std::pow(prop.wn * std::pow(prop.gme, 2), -THIRD);
       d3 = std::max(propa.dlsa, 1.3787 * xae + propa.dla);
@@ -407,11 +407,11 @@ lrprop(double d,
     }
   if (prop.dist > 0.0)
     {
-      if (prop.dist > 1000e3)
+      if (prop.dist > 1000.0e3)
         prop.kwx = std::max(prop.kwx, 1);
       if (prop.dist < dmin)
         prop.kwx = std::max(prop.kwx, 3);
-      if (prop.dist < 1e3 || prop.dist > 2000e3)
+      if (prop.dist < 1.0e3 || prop.dist > 2000.0e3)
         prop.kwx = 4;
     }
   if (prop.dist < propa.dlsa)
@@ -470,13 +470,13 @@ lrprop(double d,
       if (!wscat)
         { 
           q = ascat(0.0, prop,propa);
-          d5 = propa.dla + 200e3;
-          d6 = d5 + 200e3;
+          d5 = propa.dla + 200.0e3;
+          d6 = d5 + 200.0e3;
           a6 = ascat(d6, prop, propa);
           a5 = ascat(d5, prop, propa);
           if (a5 < 1000.0)
             {
-              propa.ems = (a6 - a5) / 200e3;
+              propa.ems = (a6 - a5) / 200.0e3;
               propa.dx = std::max(propa.dlsa,
                                   std::max(propa.dla + 0.3 * xae * std::log(47.7 * prop.wn),
                                           (a5 - propa.aed - propa.ems * d5) / (propa.emd - propa.ems)));
@@ -551,81 +551,81 @@ avar(double zzt, double zzl, double zzc,
       switch (propv.lvar)
         {
         default:
-             if (propv.klim <= 0 || propv.klim > 7)
-               {
-                 propv.klim = 5;
-                 temp_klim = 4;
-                 {
-                   prop.kwx = std::max(prop.kwx, 2);
-                 }
-               }
-             cv1 = bv1[temp_klim];
-             cv2 = bv2[temp_klim];
-             yv1 = xv1[temp_klim];
-             yv2 = xv2[temp_klim];
-             yv3 = xv3[temp_klim];
-             csm1 = bsm1[temp_klim];
-             csm2 = bsm2[temp_klim];
-             ysm1 = xsm1[temp_klim];
-             ysm2 = xsm2[temp_klim];
-             ysm3 = xsm3[temp_klim];
-             csp1 = bsp1[temp_klim];
-             csp2 = bsp2[temp_klim];
-             ysp1 = xsp1[temp_klim];
-             ysp2 = xsp2[temp_klim];
-             ysp3 = xsp3[temp_klim];
-             csd1 = bsd1[temp_klim];
-             zd = bzd1[temp_klim];
-             cfm1 = bfm1[temp_klim];
-             cfm2 = bfm2[temp_klim];
-             cfm3 = bfm3[temp_klim];
-             cfp1 = bfp1[temp_klim];
-             cfp2 = bfp2[temp_klim];
-             cfp3 = bfp3[temp_klim];
-           case 4:
-             kdv = propv.mdvar;
-             ws = kdv >= 20;
-             if (ws)
-               kdv -= 20;
-             w1 = kdv >= 10;
-             if (w1)
-               kdv -= 10;
-             if (kdv < 0 || kdv > 3)
-               {
-                 kdv = 0;
-                 prop.kwx = std::max(prop.kwx, 2);
-               }
-           case 3:
-             q = std::log(0.133 * prop.wn);
-             gm = cfm1 + cfm2 / (std::pow(cfm3 * q, 2.0) + 1.0);
-             gp = cfp1 + cfp2 / (std::pow(cfp3 * q, 2.0) + 1.0);
-           case 2:
-             dexa = std::sqrt(18e6 * prop.he[0])
-                  + std::sqrt(18e6 * prop.he[1])
-                  + std::pow((575.7e12 / prop.wn), THIRD);
-           case 1:
-             if (prop.dist < dexa)
-               de = 130e3 * prop.dist / dexa;
-             else
-               de = 130e3 + prop.dist - dexa;
+          if (propv.klim <= 0 || propv.klim > 7)
+            {
+              propv.klim = 5;
+              temp_klim = 4;
+              {
+                prop.kwx = std::max(prop.kwx, 2);
+              }
+            }
+          cv1 = bv1[temp_klim];
+          cv2 = bv2[temp_klim];
+          yv1 = xv1[temp_klim];
+          yv2 = xv2[temp_klim];
+          yv3 = xv3[temp_klim];
+          csm1 = bsm1[temp_klim];
+          csm2 = bsm2[temp_klim];
+          ysm1 = xsm1[temp_klim];
+          ysm2 = xsm2[temp_klim];
+          ysm3 = xsm3[temp_klim];
+          csp1 = bsp1[temp_klim];
+          csp2 = bsp2[temp_klim];
+          ysp1 = xsp1[temp_klim];
+          ysp2 = xsp2[temp_klim];
+          ysp3 = xsp3[temp_klim];
+          csd1 = bsd1[temp_klim];
+          zd = bzd1[temp_klim];
+          cfm1 = bfm1[temp_klim];
+          cfm2 = bfm2[temp_klim];
+          cfm3 = bfm3[temp_klim];
+          cfp1 = bfp1[temp_klim];
+          cfp2 = bfp2[temp_klim];
+          cfp3 = bfp3[temp_klim];
+        case 4:
+          kdv = propv.mdvar;
+          ws = kdv >= 20;
+          if (ws)
+            kdv -= 20;
+          w1 = kdv >= 10;
+          if (w1)
+            kdv -= 10;
+          if (kdv < 0 || kdv > 3)
+            {
+              kdv = 0;
+              prop.kwx = std::max(prop.kwx, 2);
+            }
+        case 3:
+          q = std::log(0.133 * prop.wn);
+          gm = cfm1 + cfm2 / (std::pow(cfm3 * q, 2.0) + 1.0);
+          gp = cfp1 + cfp2 / (std::pow(cfp3 * q, 2.0) + 1.0);
+        case 2:
+          dexa = std::sqrt(18.0e6 * prop.he[0])
+               + std::sqrt(18.0e6 * prop.he[1])
+               + std::pow((575.7e12 / prop.wn), THIRD);
+        case 1:
+          if (prop.dist < dexa)
+            de = 130.0e3 * prop.dist / dexa;
+          else
+            de = 130.0e3 + prop.dist - dexa;
         }
-        vmd = curve(cv1, cv2, yv1, yv2, yv3, de);
-        sgtm = gm * curve(csm1, csm2, ysm1, ysm2, ysm3, de);
-        sgtp = gp * curve(csp1, csp2, ysp1, ysp2, ysp3, de);
-        sgtd = sgtp * csd1;
-        tgtd = (sgtp - sgtd) * zd;
-        if (w1)
-          sgl = 0.0;
-        else
-          {
-            q = (1.0 - 0.8 * std::exp(-prop.dist / 50e3)) * prop.dh * prop.wn;
-            sgl = 10.0 * q / (q + 13.0);
-          }
-        if (ws)
-          vs0 = 0.0;
-        else
-          vs0 = pow(5.0 + 3.0 * std::exp(-de / 100e3), 2.0);
-        propv.lvar = 0;
+      vmd = curve(cv1, cv2, yv1, yv2, yv3, de);
+      sgtm = gm * curve(csm1, csm2, ysm1, ysm2, ysm3, de);
+      sgtp = gp * curve(csp1, csp2, ysp1, ysp2, ysp3, de);
+      sgtd = sgtp * csd1;
+      tgtd = (sgtp - sgtd) * zd;
+      if (w1)
+        sgl = 0.0;
+      else
+        {
+          q = (1.0 - 0.8 * std::exp(-prop.dist / 50.0e3)) * prop.dh * prop.wn;
+          sgl = 10.0 * q / (q + 13.0);
+        }
+      if (ws)
+        vs0 = 0.0;
+      else
+        vs0 = pow(5.0 + 3.0 * std::exp(-de / 100.0e3), 2.0);
+      propv.lvar = 0;
     }
   zt = zzt;
   zl = zzl;
