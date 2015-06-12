@@ -7,16 +7,16 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          185
-         PTHLEN =        92500.00 (M) 
+         POINTS =          184
+         PTHLEN =        92000.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Double Horizon, Diffraction Dominant
-         LOSS   =        168.4096 (DB) 
-         FSPLSS =        111.7728 (DB) 
+         LOSS   =        168.5964 (DB) 
+         FSPLSS =        111.7258 (DB) 
          ERROR  = 0
 
 
@@ -29,16 +29,16 @@
  INPUT:  TX HT  =        1000.000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          185
-         PTHLEN =        92500.00 (M) 
+         POINTS =          184
+         PTHLEN =        92000.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Single Horizon, Diffraction Dominant
-         LOSS   =        147.0957 (DB) 
-         FSPLSS =        111.7728 (DB) 
+         LOSS   =        147.1910 (DB) 
+         FSPLSS =        111.7258 (DB) 
          ERROR  = 0
 
 
@@ -51,16 +51,16 @@
  INPUT:  TX HT  =        10000.00 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          185
-         PTHLEN =        92500.00 (M) 
+         POINTS =          184
+         PTHLEN =        92000.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Line-Of-Sight Mode
-         LOSS   =        111.7416 (DB) 
-         FSPLSS =        111.7728 (DB) 
+         LOSS   =        111.6948 (DB) 
+         FSPLSS =        111.7258 (DB) 
          ERROR  = 4
 
 
@@ -73,17 +73,17 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          140
-         PTHLEN =        70000.00 (M) 
+         POINTS =          139
+         PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Double Horizon, Diffraction Dominant
-         LOSS   =        177.4933 (DB) 
-         FSPLSS =        109.3520 (DB) 
-         ERROR  = 3
+         LOSS   =        174.5253 (DB) 
+         FSPLSS =        109.2897 (DB) 
+         ERROR  = 0
 
 
   ***  RUN #  5 ***
@@ -95,17 +95,17 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          140
-         PTHLEN =        70000.00 (M) 
+         POINTS =          139
+         PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Double Horizon, Diffraction Dominant
-         LOSS   =        177.4933 (DB) 
-         FSPLSS =        109.3520 (DB) 
-         ERROR  = 3
+         LOSS   =        174.5253 (DB) 
+         FSPLSS =        109.2897 (DB) 
+         ERROR  = 0
 
 
   ***  RUN #  6 ***
@@ -117,16 +117,16 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        100.0000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          140
-         PTHLEN =        70000.00 (M) 
+         POINTS =          139
+         PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Double Horizon, Diffraction Dominant
-         LOSS   =        178.7129 (DB) 
-         FSPLSS =        109.3520 (DB) 
+         LOSS   =        177.2047 (DB) 
+         FSPLSS =        109.2897 (DB) 
          ERROR  = 0
 
 
@@ -139,16 +139,16 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        1000.000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          140
-         PTHLEN =        70000.00 (M) 
+         POINTS =          139
+         PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Double Horizon, Diffraction Dominant
-         LOSS   =        132.1258 (DB) 
-         FSPLSS =        109.3520 (DB) 
+         LOSS   =        131.3007 (DB) 
+         FSPLSS =        109.2897 (DB) 
          ERROR  = 0
 
 
@@ -161,16 +161,16 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        10.00000 (MHZ) 
-         POINTS =          140
-         PTHLEN =        70000.00 (M) 
+         POINTS =          139
+         PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Double Horizon, Diffraction Dominant
-         LOSS   =        140.7387 (DB) 
-         FSPLSS =        89.35196 (DB) 
+         LOSS   =        140.7994 (DB) 
+         FSPLSS =        89.28970 (DB) 
          ERROR  = 4
 
 
@@ -183,17 +183,17 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        1000.000 (MHZ) 
-         POINTS =          140
-         PTHLEN =        70000.00 (M) 
+         POINTS =          139
+         PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Double Horizon, Troposcatter Dominant
-         LOSS   =        217.4988 (DB) 
-         FSPLSS =        129.3520 (DB) 
-         ERROR  = 3
+         LOSS   =        212.2399 (DB) 
+         FSPLSS =        129.2897 (DB) 
+         ERROR  = 0
 
 
   ***  RUN # 10 ***
@@ -205,17 +205,17 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        15000.00 (MHZ) 
-         POINTS =          140
-         PTHLEN =        70000.00 (M) 
+         POINTS =          139
+         PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Double Horizon, Troposcatter Dominant
-         LOSS   =        280.8414 (DB) 
-         FSPLSS =        152.8738 (DB) 
-         ERROR  = 3
+         LOSS   =        283.4866 (DB) 
+         FSPLSS =        152.8115 (DB) 
+         ERROR  = 1
 
 
   ***  RUN # 11 ***
@@ -227,16 +227,16 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          140
-         PTHLEN =        70000.00 (M) 
+         POINTS =          139
+         PTHLEN =        69500.00 (M) 
          REFRAC =        201.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Double Horizon, Diffraction Dominant
-         LOSS   =        178.7839 (DB) 
-         FSPLSS =        109.3520 (DB) 
+         LOSS   =        175.2686 (DB) 
+         FSPLSS =        109.2897 (DB) 
          ERROR  = 4
 
 
@@ -249,17 +249,17 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          140
-         PTHLEN =        70000.00 (M) 
+         POINTS =          139
+         PTHLEN =        69500.00 (M) 
          REFRAC =        400.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Double Horizon, Diffraction Dominant
-         LOSS   =        175.1190 (DB) 
-         FSPLSS =        109.3520 (DB) 
-         ERROR  = 3
+         LOSS   =        173.1700 (DB) 
+         FSPLSS =        109.2897 (DB) 
+         ERROR  = 0
 
 
   ***  RUN # 13 ***
@@ -271,17 +271,17 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          140
-         PTHLEN =        70000.00 (M) 
+         POINTS =          139
+         PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = ERR
  OUTPUT: VER #  = 7.000000
          MODE   = Double Horizon, Diffraction Dominant
-         LOSS   =        178.1141 (DB) 
-         FSPLSS =        109.3520 (DB) 
-         ERROR  = 3
+         LOSS   =        174.9988 (DB) 
+         FSPLSS =        109.2897 (DB) 
+         ERROR  = 0
 
 
   ***  RUN # 14 ***
@@ -293,17 +293,17 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          140
-         PTHLEN =        70000.00 (M) 
+         POINTS =          139
+         PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Double Horizon, Diffraction Dominant
-         LOSS   =        177.4933 (DB) 
-         FSPLSS =        109.3520 (DB) 
-         ERROR  = 3
+         LOSS   =        174.5253 (DB) 
+         FSPLSS =        109.2897 (DB) 
+         ERROR  = 0
 
 
   ***  RUN # 15 ***
@@ -315,17 +315,17 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        15000.00 (MHZ) 
-         POINTS =          140
-         PTHLEN =        70000.00 (M) 
+         POINTS =          139
+         PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Double Horizon, Troposcatter Dominant
-         LOSS   =        280.8414 (DB) 
-         FSPLSS =        152.8738 (DB) 
-         ERROR  = 3
+         LOSS   =        283.4866 (DB) 
+         FSPLSS =        152.8115 (DB) 
+         ERROR  = 1
 
 
   ***  RUN # 16 ***
@@ -337,17 +337,17 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =           50
-         PTHLEN =        25000.00 (M) 
+         POINTS =           49
+         PTHLEN =        24500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.01000000 (S/M) 
          PERMIT =        8.000000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
-         MODE   = Double Horizon, Diffraction Dominant
-         LOSS   =        154.0884 (DB) 
-         FSPLSS =        100.4088 (DB) 
-         ERROR  = 3
+         MODE   = Single Horizon, Diffraction Dominant
+         LOSS   =        138.9693 (DB) 
+         FSPLSS =        100.2333 (DB) 
+         ERROR  = 0
 
 
   ***  RUN # 17 ***
@@ -359,17 +359,17 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =           50
-         PTHLEN =        25000.00 (M) 
+         POINTS =           49
+         PTHLEN =        24500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =       0.5000000 (S/M) 
          PERMIT =        40.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
-         MODE   = Double Horizon, Diffraction Dominant
-         LOSS   =        153.3051 (DB) 
-         FSPLSS =        100.4088 (DB) 
-         ERROR  = 3
+         MODE   = Single Horizon, Diffraction Dominant
+         LOSS   =        138.5708 (DB) 
+         FSPLSS =        100.2333 (DB) 
+         ERROR  = 0
 
 
   ***  RUN # 18 ***
@@ -381,16 +381,16 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =           10
-         PTHLEN =        5000.000 (M) 
+         POINTS =            9
+         PTHLEN =        4500.000 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Line-Of-Sight Mode
-         LOSS   =        107.7074 (DB) 
-         FSPLSS =        86.42940 (DB) 
+         LOSS   =        105.8527 (DB) 
+         FSPLSS =        85.51425 (DB) 
          ERROR  = 0
 
 
@@ -403,16 +403,16 @@
  INPUT:  TX HT  =       0.1000000 (M) 
          RX HT  =       0.1000000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =           10
-         PTHLEN =        5000.000 (M) 
+         POINTS =            9
+         PTHLEN =        4500.000 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Double Horizon, Diffraction Dominant
-         LOSS   =        148.6624 (DB) 
-         FSPLSS =        86.42940 (DB) 
+         LOSS   =        147.5614 (DB) 
+         FSPLSS =        85.51425 (DB) 
          ERROR  = 4
 
 
@@ -425,16 +425,16 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =           10
-         PTHLEN =        5000.000 (M) 
+         POINTS =            9
+         PTHLEN =        4500.000 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
-         MODE   = Double Horizon, Diffraction Dominant
-         LOSS   =        132.8908 (DB) 
-         FSPLSS =        86.42940 (DB) 
+         MODE   = Single Horizon, Diffraction Dominant
+         LOSS   =        125.8129 (DB) 
+         FSPLSS =        85.51425 (DB) 
          ERROR  = 3
 
 
@@ -447,16 +447,16 @@
  INPUT:  TX HT  =        1.000000 (M) 
          RX HT  =        1.000000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          168
-         PTHLEN =        84000.00 (M) 
+         POINTS =          167
+         PTHLEN =        83500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Double Horizon, Diffraction Dominant
-         LOSS   =        165.2137 (DB) 
-         FSPLSS =        110.9356 (DB) 
+         LOSS   =        165.5247 (DB) 
+         FSPLSS =        110.8837 (DB) 
          ERROR  = 0
 
 
@@ -469,16 +469,16 @@
  INPUT:  TX HT  =        2000.000 (M) 
          RX HT  =        2000.000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          168
-         PTHLEN =        84000.00 (M) 
+         POINTS =          167
+         PTHLEN =        83500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Line-Of-Sight Mode
-         LOSS   =        110.9025 (DB) 
-         FSPLSS =        110.9356 (DB) 
+         LOSS   =        110.8510 (DB) 
+         FSPLSS =        110.8837 (DB) 
          ERROR  = 1
 
 
@@ -491,16 +491,16 @@
  INPUT:  TX HT  =        2.000000 (M) 
          RX HT  =        2.000000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =           78
-         PTHLEN =        39000.00 (M) 
+         POINTS =           77
+         PTHLEN =        38500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
          PERMIT =        15.00000
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Single Horizon, Diffraction Dominant
-         LOSS   =        223.6219 (DB) 
-         FSPLSS =        104.2713 (DB) 
+         LOSS   =        222.7668 (DB) 
+         FSPLSS =        104.1592 (DB) 
          ERROR  = 3
 
 
@@ -508,24 +508,24 @@
 Passes   :  2
 Warnings :  0
 Errors   : 21
-  Test  1  Delta 1.791538
-  Test  2  Delta 11.95659
-  Test  4  Delta -8.729369
-  Test  5  Delta -8.729369
-  Test  6  Delta -6.603129
-  Test  7  Delta -26.37127
-  Test  8  Delta 7.101613
-  Test  9  Delta 10.17892
-  Test 10  Delta 29.71853
-  Test 11  Delta -7.753916
-  Test 12  Delta -3.494392
-  Test 13  Delta -8.108567
-  Test 14  Delta -8.729369
-  Test 15  Delta 29.19443
-  Test 16  Delta 14.05143
-  Test 17  Delta 13.26810
-  Test 18  Delta 9.065190
-  Test 19  Delta 46.64473
-  Test 20  Delta 15.00415
-  Test 21  Delta -13.31986
-  Test 23  Delta 77.29910
+  Test  1  Delta 1.978271
+  Test  2  Delta 12.05193
+  Test  4  Delta -11.69737
+  Test  5  Delta -11.69737
+  Test  6  Delta -8.111258
+  Test  7  Delta -27.19637
+  Test  8  Delta 7.162267
+  Test  9  Delta 4.920028
+  Test 10  Delta 32.36375
+  Test 11  Delta -11.26919
+  Test 12  Delta -5.443422
+  Test 13  Delta -11.22389
+  Test 14  Delta -11.69737
+  Test 15  Delta 31.83965
+  Test 16  Delta -1.067696
+  Test 17  Delta -1.466180
+  Test 18  Delta 7.210531
+  Test 19  Delta 45.54369
+  Test 20  Delta 7.926210
+  Test 21  Delta -13.00889
+  Test 23  Delta 76.44396

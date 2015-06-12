@@ -164,7 +164,7 @@ the path distance is then NP*XI.
       PFL     Terrain profile.  An array packed with the values NP, XI,
               P(0), ..., P(NP), in that order.  Thus PFL(1) is the floating
               point representation of NP, PFL(2) equals the interval XI
-              betwee profile points, and PFL(i+3) equals P(i), i=0, ..., NP,
+              between profile points, and PFL(i+3) equals P(i), i=0, ..., NP,
               i.e., the elevation of the point distant i*XI from the first
               terminal.  The total length of the array is NP+3.
       KLIM    Climate code.  If greater than 0 the routine will put this

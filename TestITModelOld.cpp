@@ -292,7 +292,7 @@ TestITM()
         }
 
         std::vector<double> elevation(1 + 1 + num_profile_points);
-		elevation[0] = static_cast<double>(num_profile_points);
+		elevation[0] = static_cast<double>(num_profile_points - 1);
 		elevation[1] = dstinc;
 		std::copy(elev + offset, elev + offset + num_profile_points, elevation.begin() + 2);
 

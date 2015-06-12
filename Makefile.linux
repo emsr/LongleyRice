@@ -40,7 +40,8 @@ CXX_DIR = /usr
 CXX_BIN_DIR = $(CXX_DIR)/bin
 CXX_STD = -std=c++14
 CXX_OPTS = -fdiagnostics-color=always
-CXX = $(CXX_BIN_DIR)/g++
+CXX_BIN = g++
+CXX = $(CXX_BIN_DIR)/$(CXX_BIN)
 ifneq ("$(wildcard $(CXX_BIN_DIR)/ar)","")
   AR = "$(CXX_BIN_DIR)/ar"
 else

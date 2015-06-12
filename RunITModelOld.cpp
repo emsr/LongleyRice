@@ -141,7 +141,7 @@ ReadProfile(const std::string & filename,
         return;
 
     elevation.resize(1 + 1 + static_cast<long>(num_points));
-    elevation[0] = num_points;
+    elevation[0] = num_points - 1;
     elevation[1] = delta_dist;
 
     for (long i = 0; i < static_cast<long>(num_points); ++i)
