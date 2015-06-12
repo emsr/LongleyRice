@@ -86,7 +86,7 @@ TestITM()
 
     const double dstinc = 500.0;
     const double elev[1 + 1 + 250] {
-	    250.0,
+	    250.0 - 1.0,
 		dstinc,
         0.0,   0.0,   0.0,   0.0,   0.0,
         0.0,   0.0,   0.0,   0.0,   0.0,
@@ -313,7 +313,7 @@ TestITM()
         std::cout << " INPUT:  TX HT  = " << std::setw(15) << tx_antenna_height << " (M) " << std::endl;
         std::cout << "         RX HT  = " << std::setw(15) << rx_antenna_height << " (M) " << std::endl;
         std::cout << "         FREQ   = " << std::setw(15) << frequency << " (MHZ) " << std::endl;
-        std::cout << "         POINTS = " << std::setw(12) << static_cast<long>(elevation[0]) << std::endl;
+        std::cout << "         POINTS = " << std::setw(12) << static_cast<long>(elevation[0] + 1.0) << std::endl;
         std::cout << "         PTHLEN = " << std::setw(15) << elevation[0] * elevation[1] << " (M) " << std::endl;
         std::cout << "         REFRAC = " << std::setw(15) << refractivity << " (N) " << std::endl;
         std::cout << "         CONDUC = " << std::setw(15) << conductivity << " (S/M) " << std::endl;
@@ -385,8 +385,21 @@ WriteProfile(const std::string & filename,
              const std::vector<double> & elevation)
 {
     std::ofstream bug(filename);
-    for (auto elev : elevation)
+
+    if (elevation.size() > 0)
     {
-        bug << elev << '\n' << std::showpoint;
+        bug << elevation[0] + 1.0 << '\n';
+    }
+
+    bug << std::showpoint;
+
+    if (elevation.size() > 1)
+    {
+        bug << elevation[1] << '\n';
+    }
+
+    for (unsigned int i = 2; i < elevation.size(); ++i)
+    {
+        bug << elevation[i] << '\n';
     }
 }

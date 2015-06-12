@@ -7,7 +7,7 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          184
+         POINTS =          185
          PTHLEN =        92000.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -29,7 +29,7 @@
  INPUT:  TX HT  =        1000.000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          184
+         POINTS =          185
          PTHLEN =        92000.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -51,7 +51,7 @@
  INPUT:  TX HT  =        10000.00 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          184
+         POINTS =          185
          PTHLEN =        92000.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -73,7 +73,7 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          139
+         POINTS =          140
          PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -95,7 +95,7 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          139
+         POINTS =          140
          PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -117,7 +117,7 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        100.0000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          139
+         POINTS =          140
          PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -139,7 +139,7 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        1000.000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          139
+         POINTS =          140
          PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -161,7 +161,7 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        10.00000 (MHZ) 
-         POINTS =          139
+         POINTS =          140
          PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -183,7 +183,7 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        1000.000 (MHZ) 
-         POINTS =          139
+         POINTS =          140
          PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -205,7 +205,7 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        15000.00 (MHZ) 
-         POINTS =          139
+         POINTS =          140
          PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -227,7 +227,7 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          139
+         POINTS =          140
          PTHLEN =        69500.00 (M) 
          REFRAC =        201.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -249,7 +249,7 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          139
+         POINTS =          140
          PTHLEN =        69500.00 (M) 
          REFRAC =        400.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -271,7 +271,7 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          139
+         POINTS =          140
          PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -293,7 +293,7 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          139
+         POINTS =          140
          PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -315,7 +315,7 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        15000.00 (MHZ) 
-         POINTS =          139
+         POINTS =          140
          PTHLEN =        69500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -337,7 +337,7 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =           49
+         POINTS =           50
          PTHLEN =        24500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.01000000 (S/M) 
@@ -359,7 +359,7 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =           49
+         POINTS =           50
          PTHLEN =        24500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =       0.5000000 (S/M) 
@@ -381,7 +381,7 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =            9
+         POINTS =           10
          PTHLEN =        4500.000 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -403,7 +403,7 @@
  INPUT:  TX HT  =       0.1000000 (M) 
          RX HT  =       0.1000000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =            9
+         POINTS =           10
          PTHLEN =        4500.000 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -425,7 +425,7 @@
  INPUT:  TX HT  =        10.00000 (M) 
          RX HT  =        10.00000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =            9
+         POINTS =           10
          PTHLEN =        4500.000 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -447,7 +447,7 @@
  INPUT:  TX HT  =        1.000000 (M) 
          RX HT  =        1.000000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          167
+         POINTS =          168
          PTHLEN =        83500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -469,7 +469,7 @@
  INPUT:  TX HT  =        2000.000 (M) 
          RX HT  =        2000.000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =          167
+         POINTS =          168
          PTHLEN =        83500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -491,7 +491,7 @@
  INPUT:  TX HT  =        2.000000 (M) 
          RX HT  =        2.000000 (M) 
          FREQ   =        100.0000 (MHZ) 
-         POINTS =           77
+         POINTS =           78
          PTHLEN =        38500.00 (M) 
          REFRAC =        301.0000 (N) 
          CONDUC =      0.02800000 (S/M) 
@@ -499,7 +499,7 @@
          POLARZ = VERT
  OUTPUT: VER #  = 7.000000
          MODE   = Single Horizon, Diffraction Dominant
-         LOSS   =        222.7668 (DB) 
+         LOSS   =        222.8971 (DB) 
          FSPLSS =        104.1592 (DB) 
          ERROR  = 3
 
@@ -528,4 +528,4 @@ Errors   : 21
   Test 19  Delta 45.54369
   Test 20  Delta 7.926210
   Test 21  Delta -13.00889
-  Test 23  Delta 76.44396
+  Test 23  Delta 76.57431
