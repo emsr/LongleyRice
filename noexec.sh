@@ -10,5 +10,7 @@ chmod -R -f +rw,-x \
  README TODO \
  *.pdf *.doc *.ppt *.xls
 
- chmod -f +rwx *.sh
+chmod -f +rwx *.sh
+
+chmod +x `find . -type d`
  
