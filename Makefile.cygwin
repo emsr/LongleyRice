@@ -28,18 +28,18 @@ endif
 INST_BIN_DIR = $(INST_DIR)/bin
 CD_DIR = CD
 PROD_DIR = $(CD_DIR)/$(OUT_BASE)-$(VERSION_TIREM)
-OS_DIR = $(PROD_DIR)/linux
+OS_DIR = $(PROD_DIR)/cygwin
 ABI_DIR = $(OS_DIR)/$(ABI)
 DOCS_DIR = $(PROD_DIR)/docs
 HTML_DIR = $(DOCS_DIR)/html
-TARBALL_DIR = $(OUT_BASE)
+TARBALL_DIR = $(OUT_BASE) -flto
 
 COPY = cp -f
 SED = sed
 CXX_DIR = $$HOME/bin
 CXX_BIN_DIR = $(CXX_DIR)/bin
 CXX_STD = -std=c++14
-CXX_OPTS = -fdiagnostics-color=always
+CXX_OPTS = 
 CXX_BIN = g++
 CXX = $(CXX_BIN_DIR)/$(CXX_BIN)
 ifneq ("$(wildcard $(CXX_BIN_DIR)/ar)","")
@@ -57,17 +57,17 @@ ifeq ($(ABI),64)
 else
   CXX_LIB_DIR = $(CXX_DIR)/lib32
 endif
-OPT = -O3 -flto
+OPT = -O3
 #OPT = -g
-CXXFLAGS = $(CXX_STD) $(CXX_OPTS) -Wall -Wextra -Wno-deprecated-declarations -Wold-style-cast $(OPT) -m$(ABI) -fPIC -c
-OFLAGS = -Wall -Wextra $(OPT) -m$(ABI) -fPIC -Wl,-rpath,$(CXX_LIB_DIR)
+CXXFLAGS = $(CXX_STD) $(CXX_OPTS) -Wall -Wextra -Wno-deprecated-declarations -Wold-style-cast $(OPT) -m$(ABI) -c
+OFLAGS = -Wall -Wextra $(OPT) -m$(ABI) -static-libgcc -static-libstdc++
 LIB_DL = -ldl
 #  These flags control library symbol visibility.
 VIS_DEFAULT = -fvisibility=default
 VIS_HIDDEN = -fvisibility=hidden
-DLL_EXT = .so
-EXE_EXT = 
-LIB_EXT = .a
+DLL_EXT = .dll
+EXE_EXT = .exe
+LIB_EXT = .lib
 OBJ_EXT = .o
 DLL_PRE = 
 

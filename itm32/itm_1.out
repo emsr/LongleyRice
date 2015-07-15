@@ -7,7 +7,7 @@
   Enter reliability (>= 0.01, <= 0.99) %: 
   Enter polarization (V|H): 
   Enter relative permittivity (>= 0, <= 100): 
-  Enter conductivity (>= 1e-005, <= 100) in Siemens per meter: 
+  Enter conductivity (>= 1e-05, <= 100) in Siemens per meter: 
   Enter refractivity (>= 200, <= 450) in M-units:   Radio Climates:
   1) Equatorial
   2) Continental Subtropical
