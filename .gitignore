@@ -2,6 +2,9 @@ CMakeCache.txt
 CMakeFiles
 Makefile
 cmake_install.cmake
+CTestTestfile.cmake
+Testing
+
 RunITModel
 RunITModelOld
 TestITModel
@@ -21,11 +24,13 @@ itm32/RunITModel
 itm32/RunITModelOld
 itm32/TestITModel
 itm32/TestITModelOld
+itm32/Profile.txt
 
 itm64/RunITModel
 itm64/RunITModelOld
 itm64/TestITModel
 itm64/TestITModelOld
+itm64/Profile.txt
 
 itm_cpp.tar.bz2
 
