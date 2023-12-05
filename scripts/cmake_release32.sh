@@ -1,11 +1,11 @@
 #! /bin/bash
 
 abi=32
-dir=itm$abi
+build_dir=build/itm$abi
 
-rm -rf $dir
-mkdir $dir
-cd $dir
-cmake -DABI=$abi -DCMAKE_BUILD_TYPE=Release ..
-make -j$nproc
-cd ..
+# cmake-3.24 has a --fresh
+rm -rf $build_dir
+
+cmake -DABI=$abi -DCMAKE_BUILD_TYPE=Release -B $build_dir
+cmake --build $build_dir -j$nproc
+cmake --build $build_dir --target test

@@ -1,6 +1,7 @@
 
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 
 #include "ITM.h"
@@ -10,7 +11,9 @@ void ReadProfile(const std::string & filename, std::vector<double> & elevation);
 int
 main()
 {
-  std::vector<double> elevation;
+  using std::cin, std::cout, std::vector, std::string, std::quoted;
+
+  vector<double> elevation;
   double tx_antenna_height, rx_antenna_height,
          permittivity, conductivity, refractivity,
          frequency;
@@ -21,35 +24,35 @@ main()
   int errnum;
 
   // Read profile data.
-  std::string filename;
-  std::cout << "\n  Enter profile file name: ";
+  string filename;
+  cout << "\n  Enter profile file name: ";
 #if defined(__cpp_lib_quoted_string_io)
-  std::cin >> std::quoted(filename);
+  cin >> quoted(filename);
 #else
-  std::cin >> filename;
+  cin >> filename;
 #endif
   ReadProfile(filename, elevation);
   if (elevation.size() < 5)
     std::cerr << "\n  Error reading profile data file \"" << filename << "\".\n";
 
-  std::cout << std::endl << "  Enter transmit antenna height (>= " << 0.0 << ", <= " << 30000.0 << ") in meters: ";
-  std::cin >> tx_antenna_height;
+  cout << std::endl << "  Enter transmit antenna height (>= " << 0.0 << ", <= " << 30000.0 << ") in meters: ";
+  cin >> tx_antenna_height;
 
-  std::cout << std::endl << "  Enter receive antenna height (>= " << 0.0 << ", <= " << 30000.0 << ") in meters: ";
-  std::cin >> rx_antenna_height;
+  cout << std::endl << "  Enter receive antenna height (>= " << 0.0 << ", <= " << 30000.0 << ") in meters: ";
+  cin >> rx_antenna_height;
 
-  std::cout << std::endl << "  Enter transmit frequency (>= " << 1.0 << ", <= " << 40000.0 << ") in MHz: ";
-  std::cin >> frequency;
+  cout << std::endl << "  Enter transmit frequency (>= " << 1.0 << ", <= " << 40000.0 << ") in MHz: ";
+  cin >> frequency;
 
-  std::cout << std::endl << "  Enter confidence (>= " << 0.01 << ", <= " << 0.99 << ") %: ";
-  std::cin >> confidence;
+  cout << std::endl << "  Enter confidence (>= " << 0.01 << ", <= " << 0.99 << ") %: ";
+  cin >> confidence;
 
-  std::cout << std::endl << "  Enter reliability (>= " << 0.01 << ", <= " << 0.99 << ") %: ";
-  std::cin >> reliability;
+  cout << std::endl << "  Enter reliability (>= " << 0.01 << ", <= " << 0.99 << ") %: ";
+  cin >> reliability;
 
   char pol = '\0';
-  std::cout << std::endl << "  Enter polarization (V|H): ";
-  std::cin >> pol;
+  cout << std::endl << "  Enter polarization (V|H): ";
+  cin >> pol;
   if ( pol == 'v' || pol == 'V' )
   {
     polarization = 1;
@@ -63,35 +66,35 @@ main()
     polarization = 1;
   }
 
-  std::cout << std::endl << "  Enter relative permittivity (>= " << 0.0 << ", <= " << 100.0 << "): ";
-  std::cin >> permittivity;
+  cout << std::endl << "  Enter relative permittivity (>= " << 0.0 << ", <= " << 100.0 << "): ";
+  cin >> permittivity;
 
-  std::cout << std::endl << "  Enter conductivity (>= " << 0.00001 << ", <= " << 100.0 << ") in Siemens per meter: ";
-  std::cin >> conductivity;
+  cout << std::endl << "  Enter conductivity (>= " << 0.00001 << ", <= " << 100.0 << ") in Siemens per meter: ";
+  cin >> conductivity;
 
-  std::cout << std::endl << "  Enter refractivity (>= " << 200.0 << ", <= " << 450.0 << ") in M-units: ";
-  std::cin >> refractivity;
+  cout << std::endl << "  Enter refractivity (>= " << 200.0 << ", <= " << 450.0 << ") in M-units: ";
+  cin >> refractivity;
 
-  std::cout << "  Radio Climates:\n";
-  std::cout << "  1) Equatorial\n";
-  std::cout << "  2) Continental Subtropical\n";
-  std::cout << "  3) Maritime Tropical\n";
-  std::cout << "  4) Desert\n";
-  std::cout << "  5) Continental Temperate\n";
-  std::cout << "  6) Maritime Temperate, Over Land\n";
-  std::cout << "  7) Maritime Temperate, Over Sea\n";
-  std::cout << "  Enter Climate: ";
-  std::cin >> climate;
+  cout << "  Radio Climates:\n";
+  cout << "  1) Equatorial\n";
+  cout << "  2) Continental Subtropical\n";
+  cout << "  3) Maritime Tropical\n";
+  cout << "  4) Desert\n";
+  cout << "  5) Continental Temperate\n";
+  cout << "  6) Maritime Temperate, Over Land\n";
+  cout << "  7) Maritime Temperate, Over Sea\n";
+  cout << "  Enter Climate: ";
+  cin >> climate;
 
   point_to_point(elevation, tx_antenna_height, rx_antenna_height,
                  permittivity, conductivity, refractivity,
                  frequency, climate, polarization, confidence, reliability,
                  dbloss, strmode, errnum);
 
-  std::cout << "\n  ITM Output\n";
-  std::cout << "  Loss : " << dbloss << " dB\n";
-  std::cout << "  Mode : " << strmode << '\n';
-  std::cout << "  Error: " << errnum << '\n';
+  cout << "\n  ITM Output\n";
+  cout << "  Loss : " << dbloss << " dB\n";
+  cout << "  Mode : " << strmode << '\n';
+  cout << "  Error: " << errnum << '\n';
 
   return 0;
 }

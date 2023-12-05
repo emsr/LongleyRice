@@ -140,7 +140,7 @@ TestITM()
         0.0,   0.0,   0.0,   0.0,   0.0
     };
 
-    WriteProfile("Profile.txt", std::vector<double>{elev, elev + 250});
+    WriteProfile("ProfileTestOld.txt", std::vector<double>{elev, 2 + elev + 250});
 
     std::cout.precision( 7 );
     std::cout.flags( std::cout.flags() | std::ios::showpoint );

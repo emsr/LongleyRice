@@ -1,10 +1,11 @@
 #! /bin/bash
 
-dir=debug64
+abi=64
+build_dir=build/debug$abi
 
-rm -rf $dir
-mkdir $dir
-cd $dir
-cmake -DCMAKE_BUILD_TYPE=Debug ..
-make -j$nproc
-cd ..
+# cmake-3.24 has a --fresh
+rm -rf $build_dir
+
+cmake -DABI=$abi -DCMAKE_BUILD_TYPE=Debug -B $build_dir
+cmake --build $build_dir -j$nproc
+cmake --build $build_dir --target test
