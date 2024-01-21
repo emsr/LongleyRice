@@ -1,0 +1,26 @@
+profile1.txt
+10.0
+1.0
+230.0
+0.5
+0.5
+V
+15.0
+0.008
+301.0
+5
+
+
+h_tx__meter  10
+h_rx__meter  1
+epsilon      15
+sigma        0.008
+N_0          301
+f__mhz       230
+pol          1
+climate      5
+time         50
+location     17
+situation    23
+mdvar        12
+A__db        207.65

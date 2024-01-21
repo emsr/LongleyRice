@@ -5,48 +5,36 @@ cmake_install.cmake
 CTestTestfile.cmake
 Testing
 
-RunITModel
-RunITModelOld
-TestITModel
-TestITModelOld
+RunLongleyRice
+RunLongleyRiceOld
+TestLongleyRice
+TestLongleyRiceOld
 
-*.o
+ITMDLL_BAD.cpp
 
-*.exe
-
-*.so
-*.dll
-
-*.a
-*.lib
+RunLongleyRice
+RunITMDLL
+libLongleyRice.so
+libITMDLL.so
 
 build/debug32/
 
-build/itm32/ITMConfig.cmake
-build/itm32/RunITModel
-build/itm32/RunITModelOld
-build/itm32/TestITModel
-build/itm32/TestITModelOld
+build/itm32/LongleyRiceConfig.cmake
+build/itm32/RunLongleyRice
+build/itm32/RunITMDLL
+build/itm32/TestLongleyRice
+build/itm32/TestLongleyRiceOld
 build/itm32/Profile.txt
+build/itm32/libLongleyRice.so
+build/itm32/libITMDLL.so
 
 build/debug64/
 
-build/itm64/ITMConfig.cmake
-build/itm64/RunITModel
-build/itm64/RunITModelOld
-build/itm64/TestITModel
-build/itm64/TestITModelOld
+build/itm64/LongleyRiceConfig.cmake
+build/itm64/RunLongleyRice
+build/itm64/RunITMDLL
+build/itm64/TestLongleyRice
+build/itm64/TestLongleyRiceOld
 build/itm64/Profile.txt
-
-itm_cpp.tar.bz2
-
-build/itm32/obj
-build/itm32/libITM.so
-build/itm32/RunITM
-
-build/itm64/obj
-build/itm64/libITM.so
-build/itm64/RunITM
-
-itm.tar.bz2
-
+build/itm64/libLongleyRice.so
+build/itm64/libITMDLL.so

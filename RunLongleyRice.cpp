@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <fstream>
 
-#include "ITM.h"
+#include <LongleyRice.h>
 
 void ReadProfile(const std::string & filename, std::vector<double> & elevation);
 
@@ -35,23 +35,23 @@ main()
   if (elevation.size() < 5)
     std::cerr << "\n  Error reading profile data file \"" << filename << "\".\n";
 
-  cout << std::endl << "  Enter transmit antenna height (>= " << 0.0 << ", <= " << 30000.0 << ") in meters: ";
+  cout << "\n  Enter transmit antenna height (>= " << 0.0 << ", <= " << 30000.0 << ") in meters: ";
   cin >> tx_antenna_height;
 
-  cout << std::endl << "  Enter receive antenna height (>= " << 0.0 << ", <= " << 30000.0 << ") in meters: ";
+  cout << "\n  Enter receive antenna height (>= " << 0.0 << ", <= " << 30000.0 << ") in meters: ";
   cin >> rx_antenna_height;
 
-  cout << std::endl << "  Enter transmit frequency (>= " << 1.0 << ", <= " << 40000.0 << ") in MHz: ";
+  cout << "\n  Enter transmit frequency (>= " << 1.0 << ", <= " << 40000.0 << ") in MHz: ";
   cin >> frequency;
 
-  cout << std::endl << "  Enter confidence (>= " << 0.01 << ", <= " << 0.99 << ") %: ";
+  cout << "\n  Enter confidence (>= " << 0.01 << ", <= " << 0.99 << ") %: ";
   cin >> confidence;
 
-  cout << std::endl << "  Enter reliability (>= " << 0.01 << ", <= " << 0.99 << ") %: ";
+  cout << "\n  Enter reliability (>= " << 0.01 << ", <= " << 0.99 << ") %: ";
   cin >> reliability;
 
   char pol = '\0';
-  cout << std::endl << "  Enter polarization (V|H): ";
+  cout << "\n  Enter polarization (V|H): ";
   cin >> pol;
   if ( pol == 'v' || pol == 'V' )
   {
@@ -66,13 +66,13 @@ main()
     polarization = 1;
   }
 
-  cout << std::endl << "  Enter relative permittivity (>= " << 0.0 << ", <= " << 100.0 << "): ";
+  cout << "\n  Enter relative permittivity (>= " << 0.0 << ", <= " << 100.0 << "): ";
   cin >> permittivity;
 
-  cout << std::endl << "  Enter conductivity (>= " << 0.00001 << ", <= " << 100.0 << ") in Siemens per meter: ";
+  cout << "\n  Enter conductivity (>= " << 0.00001 << ", <= " << 100.0 << ") in Siemens per meter: ";
   cin >> conductivity;
 
-  cout << std::endl << "  Enter refractivity (>= " << 200.0 << ", <= " << 450.0 << ") in M-units: ";
+  cout << "\n  Enter refractivity (>= " << 200.0 << ", <= " << 450.0 << ") in M-units: ";
   cin >> refractivity;
 
   cout << "  Radio Climates:\n";
@@ -121,10 +121,10 @@ ReadProfile(const std::string & filename,
     if (delta_dist <= 0.0)
         return;
 
-    elevation.resize(1 + 1 + static_cast<long>(num_points));
-    elevation[0] = num_points - 1;
+    elevation.resize(1 + 1 + 1 + static_cast<long>(num_points));
+    elevation[0] = num_points;
     elevation[1] = delta_dist;
 
-    for (long i = 0; i < static_cast<long>(num_points); ++i)
+    for (long i = 0; i <= static_cast<long>(num_points); ++i)
         dat >> elevation[2 + i];
 }

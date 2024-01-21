@@ -19,7 +19,7 @@
 
 #define THIRD (1.0/3.0)
 
-#include "ITM.h"
+#include <LongleyRice.h>
 
 
 /// This performs the Fortran DIM function.

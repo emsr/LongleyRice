@@ -14,7 +14,7 @@
 #include <cmath>
 
 
-#include <ITM.h>
+#include <LongleyRice.h>
 
 
 /**
@@ -369,7 +369,7 @@ WriteProfile(const std::string & filename,
 
     if (elevation.size() > 0)
     {
-        bug << elevation[0] + 1.0 << '\n';
+        bug << elevation[0] << '\n';
     }
 
     bug << std::showpoint;
