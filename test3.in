@@ -2,15 +2,17 @@ profile3.txt
 15.0
 3.0
 990.0
-0.5
-0.5
+0.15
+0.40
+0.50
+12
 H
 15.0
 0.008
 301.0
 4
 
-
+# Should run point_to_pointMDH
 h_tx__meter  15
 h_rx__meter  3
 epsilon      15

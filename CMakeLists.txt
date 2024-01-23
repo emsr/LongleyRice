@@ -24,7 +24,7 @@ string(APPEND CMAKE_EXE_LINKER_FLAGS " -m${ABI}")
 # Enable testing for all systems
 enable_testing()
 
-set(CMAKE_CXX_FLAGS "${CMAKE_ADDTIONAL_CXX_FLAGS} -Wall -Wextra -Wno-deprecated-declarations -Wold-style-cast -std=c++14")
+set(CMAKE_CXX_FLAGS "${CMAKE_ADDTIONAL_CXX_FLAGS} -Wall -Wextra -Wno-deprecated-declarations -Wold-style-cast")
 
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Profile.txt" "${CMAKE_CURRENT_BINARY_DIR}/Profile.txt" COPYONLY)
 

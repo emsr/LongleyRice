@@ -1,0 +1,6 @@
+/usr/local/lib/cmake/LongleyRice/LongleyRiceConfig.cmake
+/usr/local/include/LongleyRice.h
+/usr/local/lib/libLongleyRice.so
+/usr/local/bin/RunLongleyRice
+/usr/local/lib/cmake/LongleyRice/LongleyRiceTargets.cmake
+/usr/local/lib/cmake/LongleyRice/LongleyRiceTargets-release.cmake

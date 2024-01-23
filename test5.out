@@ -1,0 +1,26 @@
+
+  Enter profile file name: 
+  Enter transmit antenna height (>= 0, <= 30000) in meters: 
+  Enter receive antenna height (>= 0, <= 30000) in meters: 
+  Enter transmit frequency (>= 1, <= 40000) in MHz: 
+  Enter time (>= 0.01, <= 0.99) %: 
+  Enter location (>= 0.01, <= 0.99) %: 
+  Enter situation (>= 0.01, <= 0.99) %: 
+  Enter variability type: 
+  Enter polarization (V|H): 
+  Enter relative permittivity (>= 0, <= 100): 
+  Enter conductivity (>= 1e-05, <= 100) in Siemens per meter: 
+  Enter refractivity (>= 200, <= 450) in M-units:   Radio Climates:
+  1) Equatorial
+  2) Continental Subtropical
+  3) Maritime Tropical
+  4) Desert
+  5) Continental Temperate
+  6) Maritime Temperate, Over Land
+  7) Maritime Temperate, Over Sea
+  Enter Climate: 
+  ITM Output
+  Loss : 218.912 dB
+  Mode  : Double Horizon, Diffraction Dominant
+  DeltaH: 109.28
+  Error : 3

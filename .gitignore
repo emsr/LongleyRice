@@ -5,6 +5,7 @@ cmake_install.cmake
 CTestTestfile.cmake
 Testing
 
+qerfi
 RunLongleyRice
 RunLongleyRiceOld
 TestLongleyRice

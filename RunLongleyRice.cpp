@@ -8,8 +8,38 @@
 
 void ReadProfile(const std::string & filename, std::vector<double> & elevation);
 
+std::string
+get_mode(int mode)
+{
+  using namespace std::string_literals;
+  if (mode == 0)
+    return "Line-Of-Sight"s;
+  if (mode >= 8)
+  {
+    mode -= 8;
+    auto str = "Double Horizon"s;
+    if (mode == 1)
+      str += ", Diffraction Dominant"s;
+    else if (mode == 2)
+      str += ", Troposcatter Dominant";
+    return str;
+  }
+  else if (mode >= 4)
+  {
+    mode -= 4;
+    auto str = "Single Horizon"s;
+    if (mode == 1)
+      str += ", Diffraction Dominant"s;
+    else if (mode == 2)
+      str += ", Troposcatter Dominant"s;
+    return str;
+  }
+  return "Error"s;
+}
+
+
 int
-main()
+main(int nargs, char**)
 {
   using std::cin, std::cout, std::vector, std::string, std::quoted;
 
@@ -19,9 +49,15 @@ main()
          frequency;
   int climate, polarization;
   double confidence, reliability;
-  double dbloss;
+  double dbloss, delta_h;
   char strmode[200] = "";
-  int errnum;
+  int errnum, mode;
+  double time, location, situation;
+  int mdvar;
+
+  bool run_tls = false;
+  if (nargs > 1)
+    run_tls = true;
 
   // Read profile data.
   string filename;
@@ -44,11 +80,28 @@ main()
   cout << "\n  Enter transmit frequency (>= " << 1.0 << ", <= " << 40000.0 << ") in MHz: ";
   cin >> frequency;
 
-  cout << "\n  Enter confidence (>= " << 0.01 << ", <= " << 0.99 << ") %: ";
-  cin >> confidence;
+  if (run_tls)
+  {
+    cout << "\n  Enter time (>= " << 0.01 << ", <= " << 0.99 << ") %: ";
+    cin >> time;
 
-  cout << "\n  Enter reliability (>= " << 0.01 << ", <= " << 0.99 << ") %: ";
-  cin >> reliability;
+    cout << "\n  Enter location (>= " << 0.01 << ", <= " << 0.99 << ") %: ";
+    cin >> location;
+
+    cout << "\n  Enter situation (>= " << 0.01 << ", <= " << 0.99 << ") %: ";
+    cin >> situation;
+
+    cout << "\n  Enter variability type: ";
+    cin >> mdvar;
+  }
+  else
+  {
+    cout << "\n  Enter confidence (>= " << 0.01 << ", <= " << 0.99 << ") %: ";
+    cin >> confidence;
+
+    cout << "\n  Enter reliability (>= " << 0.01 << ", <= " << 0.99 << ") %: ";
+    cin >> reliability;
+  }
 
   char pol = '\0';
   cout << "\n  Enter polarization (V|H): ";
@@ -86,15 +139,27 @@ main()
   cout << "  Enter Climate: ";
   cin >> climate;
 
-  point_to_point(elevation, tx_antenna_height, rx_antenna_height,
-                 permittivity, conductivity, refractivity,
-                 frequency, climate, polarization, confidence, reliability,
-                 dbloss, strmode, errnum);
+  if (run_tls)
+    point_to_pointMDH(elevation, tx_antenna_height, rx_antenna_height,
+                   permittivity, conductivity, refractivity,
+                   frequency, climate, polarization, time, location, situation, 
+                   dbloss, mode, delta_h, errnum);
+  else
+    point_to_point(elevation, tx_antenna_height, rx_antenna_height,
+                   permittivity, conductivity, refractivity,
+                   frequency, climate, polarization, confidence, reliability,
+                   dbloss, strmode, errnum);
 
   cout << "\n  ITM Output\n";
   cout << "  Loss : " << dbloss << " dB\n";
-  cout << "  Mode : " << strmode << '\n';
-  cout << "  Error: " << errnum << '\n';
+  if (run_tls)
+  {
+    cout << "  Mode  : " << get_mode(mode) << '\n';
+    cout << "  DeltaH: " << delta_h << '\n';
+  }
+  else
+    cout << "  Mode  : " << strmode << '\n';
+  cout << "  Error : " << errnum << '\n';
 
   return 0;
 }
@@ -111,9 +176,9 @@ ReadProfile(const std::string & filename,
     if (dat.fail())
         return;
 
-    double num_points = 0.0;
-    dat >> num_points;
-    if (num_points <= 0.0)
+    double max_index = 0.0;
+    dat >> max_index;
+    if (max_index <= 0.0)
         return;
 
     double delta_dist = 0.0;
@@ -121,10 +186,10 @@ ReadProfile(const std::string & filename,
     if (delta_dist <= 0.0)
         return;
 
-    elevation.resize(1 + 1 + 1 + static_cast<long>(num_points));
-    elevation[0] = num_points;
+    elevation.resize(1 + 1 + 1 + static_cast<long>(max_index));
+    elevation[0] = max_index;
     elevation[1] = delta_dist;
 
-    for (long i = 0; i <= static_cast<long>(num_points); ++i)
+    for (long i = 0; i <= static_cast<long>(max_index); ++i)
         dat >> elevation[2 + i];
 }
